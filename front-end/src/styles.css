@@ -1,0 +1,193 @@
+@font-face {
+    font-family: "Cardinal";
+    src: url("/assets/fontes/Cardinal-Regular.woff")
+}
+
+@font-face {
+    font-family: "Philosopher";
+    src: url("/assets/fontes/Philosopher.woff")
+}
+
+@font-face {
+    font-family: "Cardinal Alternate";
+    src: url("/assets/fontes/Cardinal-Alternate.woff")
+}
+
+@font-face {
+    font-family: "Quesha";
+    src: url("/assets/fontes/Quesha.woff")
+}
+
+#bt-global-bg {
+    position: absolute;
+    width: 100%;
+    background: -moz-radial-gradient(circle, #7db9e8, #0057A6);
+    background: -webkit-radial-gradient(circle, #7db9e8, #0057A6);
+    background: -o-radial-gradient(circle, #7db9e8, #0057A6);
+    background: -ms-radial-gradient(circle, #7db9e8, #0057A6);
+    background: radial-gradient(circle, #7db9e8, #0057A6);
+    background-attachment: fixed;
+}
+
+.bt-bg-transparent {
+    background-color: transparent;
+}
+
+.bt-bg-gray {
+    background-color: #000;
+}
+
+
+.bt-red-border {
+    border: 3px solid red;
+}
+
+.bt-blue-border {
+    border: 3px solid blue;
+}
+
+.bt-green-border {
+    border: 3px solid green;
+}
+
+.bt-purple-border {
+    border: 3px solid purple;
+}
+
+.bt-price-tag {
+    margin: 0;
+}
+
+.bt-vertical-border {
+    border-top: 1px solid rgba(247, 247, 247, 0.35);
+    border-bottom: 1px solid rgba(247, 247, 247, 0.35);
+}
+
+.bt-default-border {
+    border: 1px solid #777;
+}
+
+.bt-no-border {
+    border: none;
+}
+
+.bt-rounded-corners-5 {
+    border-radius: 5px;
+}
+
+.bt-rounded-corners-15 {
+    border-radius: 15px;
+}
+
+.bt-border-left {
+    border-left: 1px solid #777;
+}
+
+.bt-border-box {
+    box-sizing: border-box;
+}
+
+.bt-box-sizing {
+    box-sizing: border-box;
+}
+
+.bt-img-round-10 {
+    border-radius: 10px;
+}
+
+.bt-hover-bg-gray:hover {
+    background-color: rgb(200,200,200);
+}
+
+.bt-hover-text-white {
+    color: white
+}
+
+.bt-vertical-scrolling-list {
+    overflow: hidden; 
+    overflow-y: scroll;
+}
+
+.bt-horizontal-scrolling-list {
+    overflow: scroll; 
+    overflow-y: hidden;
+}
+
+.bt-bg-transparent {
+    -webkit-background: transparent;
+    -o-background: transparent;
+    -ms-background: transparent;
+    -moz-background: transparent;
+    background: transparent;
+}
+
+.bt-scalable-text {
+    font-size: 0.9em;
+}
+
+input#cep-input::-webkit-outer-spin-button, input#cep-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input#cep-input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.navbar-brand img {
+    max-height: 200px;
+}
+
+@media (min-width: 576px) {
+    
+    .bt-scalable-text {
+        font-size: 1.1em
+    }
+} 
+
+@media (min-width: 768px) {
+    
+    .menu .nav-item a {
+        font-size: 1.15em
+    }
+    
+    .bt-scalable-text {
+        font-size: 1.25em
+    }
+}
+
+@media (min-width: 992px) {
+    .bt-scalable-text {
+        font-size: 1.4em
+    }
+}
+
+.bt-cardinal-font {
+    font-family: "Cardinal"
+}
+
+.bt-cardinal-alternate-font {
+    font-family: "Cardinal Alternate"
+}
+
+.bt-philosopher-font {
+    font-family: "Philosopher"
+}
+
+.bt-quesha-font {
+    font-family: "Quesha"
+}
+
+.bt-shadowed-element {
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 0px 25px 5px;
+    border-radius: 15px;
+    padding: 5px 10px;
+}
+
+.bt-highlighted-text-black {
+    text-shadow: 2px 2px black
+}
+
+.bt-highlighted-text-white {
+    text-shadow: 2px 2px white
+}

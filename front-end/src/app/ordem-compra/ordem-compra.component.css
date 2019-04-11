@@ -1,0 +1,66 @@
+.bt-rounded-corners-25 {
+    border-radius: 25px;
+}
+
+.bt-rounded-corners-10 {
+    border-radius: 10px;
+}
+
+.bt-clear-padding-x {
+    padding-left: 0px; 
+    padding-right: 0px;
+}
+
+#descricao-item {
+    font-size: 0.9em;
+}
+
+#qtd-itens {
+    display: inline;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-color: #428bca;
+    padding: 6px 12px;
+    border: 1px solid #428bca;
+    color: #428bca;
+}
+
+.input-group-prepend .btn-outline-primary {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.input-group-append .btn-outline-primary {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.ordem-compra-header {
+    font-size: 2.25em;
+}
+
+@media (min-width: 576px) {
+    .ordem-compra-header {
+        font-size: 2.75em;
+    }   
+}
+
+@media (min-width: 768px) {
+    .ordem-compra-header {
+        font-size: 3.25em;
+    }   
+}
+
+@media (min-width: 992px) {
+    .ordem-compra-header {
+        font-size: 3.75em;
+    }   
+}
+
+@media (min-width: 1200px) {
+    .ordem-compra-header {
+
+    }   
+}

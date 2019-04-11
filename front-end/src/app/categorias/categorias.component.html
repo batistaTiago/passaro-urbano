@@ -1,0 +1,50 @@
+<div class="container text-light">
+  
+  <div class="secao">
+    <div class="text-center bt-quesha-font" id="section-header">{{ mainHeader }}</div>
+    <div class="text-center bt-philosopher-font d-none d-sm-block" id="section-subheader">{{ subHeader }}</div>
+  </div>
+  
+  <hr />
+  
+  <div class="row p-3 bt-shadowed-element mb-5" *ngFor="let oferta of ofertas">
+      <div class="row d-md-none d-block col-12 text-center mb-3">
+        <h2 class="font-weight-bold bt-quesha-font" style="font-size: 3em">{{ oferta.titulo }}</h2>
+      </div>
+      <div class="col-12 col-md-6 d-flex justify-content-center">
+        <img [src]="oferta.imagens[0].url" class="img-fluid bt-auto-height"/>
+      </div>
+      
+      <div class="col-12 col-md-6 p-lg-5">
+        <div class="row d-none d-md-block text-center">
+          <h2 class="font-weight-bold bt-quesha-font" style="font-size: 3em">{{ oferta.titulo }}</h2>
+        </div>
+        
+        <div class="row">
+          <div class="col-12">
+            <h4 class="text-justify mt-3 mt-md-1 bt-philosopher-font">{{ oferta.descricao }}</h4>
+            <div class="d-flex justify-content-end my-2">
+                <h6 class="bt-text-small bt-philosopher-font">Anunciado por: <b>{{ oferta.anunciante }}</b></h6>
+            </div>
+            
+            <div class="row align-items-center mt-4 bt-vertical-border py-2">
+              <div class="col-4">
+                <h5 class="bt-price-tag bt-philosopher-font">
+                  {{ oferta.preco | currency:'BRL':'symbol-narrow' }}
+                </h5>
+              </div>
+              <div class="col-8 col-md-5 offset-md-3 d-flex justify-content-end">
+                <button class="btn btn-outline-light bt-philosopher-font" [routerLink]="['/oferta', oferta.id]">Ver oferta</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <br>
+</div>

@@ -1,0 +1,217 @@
+<div class="container mb-5">
+  <div *ngIf="carrinhoService.getItems().length; else carrinhoVazio">
+    <div *ngIf="idPedidoCompra === undefined">
+      <form novalidate>
+        
+        <div class="text-light bt-quesha-font ordem-compra-header">Seu Pedido</div>
+        <hr />
+        
+        <div class="form-row mb-2 mb-md-4 bg-light py-3 py-md-1 px-lg-5 px-1 bt-rounded-corners-25 bt-shadowed-element" *ngFor="let item of itensCarrinho">
+          
+          <div class="row d-flex align-items-center">
+            
+
+            <div class="col-12 col-md-3">
+              <img [src]="item.imagem.url" class="img-fluid bt-rounded-corners-10">
+            </div>
+
+
+
+            
+            <div class="col-12 col-md-3 mt-3">
+              <h4 class="text-center bt-philosopher-font"> {{ item.titulo }} </h4>
+              <h5 class="text-justify bt-philosopher-font" id="descricao-item"> {{ item.descricao }} </h5>
+            </div>
+
+
+
+            
+            <div class="col-12 col-md-3 form-inline my-2 d-flex justify-content-center align-items-center">
+              <div class="input-group-prepend">
+                <button type="button" (click)="alterarQtdClickado(item, false, $event)" class="form-control btn btn-outline-primary">&darr;</button>
+              </div>
+              
+              <div id="qtd-itens" class="font-weight-bold bt-philosopher-font">
+                {{ item.quantidade }}
+              </div>
+              
+              <div class="input-group-append">
+                <button type="button" (click)="alterarQtdClickado(item, true, $event)" class="form-control btn btn-outline-primary">&uarr;</button>
+              </div>
+            </div>
+          
+            <div class="row col-12 col-md-3" style="padding-left: 0; padding-right: 0">
+                <div class="col-12 d-flex justify-content-center align-items-center bt-philosopher-font">
+                  Unitário: &nbsp; {{ item.preco | currency:'BRL':'symbol-narrow' }}
+                </div>
+                <div class="col-12 d-flex justify-content-center align-items-center bt-philosopher-font">
+                  Subtotal: &nbsp; <span class="font-weight-bold">{{ item.preco * item.quantidade | currency:'BRL':'symbol-narrow' }}</span>
+                </div>
+            </div>
+          </div>
+        </div> 
+        
+        <div class="form-row mt-3">
+          <div class="form-group col d-flex justify-content-end text-light">
+            <h4 class="bt-philosopher-font">Total do pedido: {{ carrinhoService.getValorTotal() | currency:'BRL':'symbol-narrow' }}</h4>
+          </div>
+        </div>
+        <br />
+        
+        
+        <h1 class="text-light bt-quesha-font">Dados de entrega</h1>
+        <hr />
+        
+        <div class="form-row">
+          
+          <div class="col-12 col-md-5 form-group bt-philosopher-font">
+            <input 
+            id="cep-input"
+            placeholder="Digite seu cep"
+            class="form-control {{ cepPrimitivo ? '' : (cepValido ? 'is-valid' : 'is-invalid') }}"
+            type="number"
+            autocomplete="off"
+            required
+            maxlength="8"
+            #inputCep
+            (input)="atualizarCep(inputCep.value)"
+            (change)="atualizarCep(inputCep.value)"
+            >
+            <div *ngIf="cepPrimitivo == false">
+              <div *ngIf="!cepValido">
+                <small class="form-text text-danger">CEP inválido</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group col-12 col-md-3 bt-philosopher-font">
+            <input 
+            type="number" 
+            class="form-control {{ numeroPrimitivo ? '' : (numeroValido ? 'is-valid' : 'is-invalid') }}" 
+            placeholder="Número" 
+            autocomplete="off" 
+            minlength="1" 
+            required
+            [value]="numero"
+            #inputNumero
+            (input)="atualizaNumero(inputNumero.value)">
+            
+            <div *ngIf="numeroPrimitivo == false">
+              <div *ngIf="!numeroValido">
+                <small class="form-text text-danger">Número inválido</small>
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="form-group col-12 col-md-4 bt-philosopher-font">
+            <input
+            type="text" 
+            class="form-control {{ complementoValido ? 'is-valid' : '' }}" 
+            placeholder="Complemento" 
+            autocomplete="off"
+            [value]="complemento"
+            #inputComplemento
+            (input)="atualizaComplemento(inputComplemento.value)"
+            aria-describedby="complementoTooltip"
+            >
+            <small id="complementoTooltip" class="form-text text-dark">Pode ser vazio</small>
+          </div>
+          
+          <div class="form-group col-12 col-md-7 bt-philosopher-font">
+            <input 
+            readonly
+            type="text" 
+            class="form-control" 
+            placeholder="Endereço" 
+            disabled
+            required
+            [value]="endereco">
+          </div>
+          
+          <div class="form-group col-12 col-md-2 bt-philosopher-font">
+            <input
+            readonly
+            disabled
+            type="text"
+            placeholder="Cidade"
+            [value]="cidade"
+            class="form-control">
+          </div>
+          
+          <div class="form-group col-12 col-md-2 bt-philosopher-font">
+            <input
+            readonly
+            disabled
+            type="text"
+            placeholder="Bairro"
+            [value]="bairro"
+            class="form-control">
+          </div>
+          
+          <div class="form-group col-12 col-md-1 bt-philosopher-font">
+            <input
+            readonly
+            disabled
+            type="text"
+            placeholder="UF"
+            [value]="uf"
+            class="form-control">
+          </div>
+        </div>
+        
+        
+        <br />
+        
+        <h1 class="text-light bt-quesha-font">Dados de pagamento</h1>
+        
+        <hr />
+        
+        <div class="form-row">
+          
+          <div class="form-group bt-philosopher-font">
+            <select 
+            class="custom-select {{ formaPagamentoPrimitivo ? '' : (formaPagamentoValido ? 'is-valid' : 'is-invalid') }}"
+            #selectFormaPagamento
+            (change)="atualizaFormaPagamento(selectFormaPagamento.value)">
+            <option value="">Selecione uma opção</option>
+            <option value="dinheiro" selected='{{ formaPagamento == "dinheiro" ? selected : "" }}'>Dinheiro</option>
+            <option value='debito' selected='{{ formaPagamento == "debito" ? selected : "" }}'>Débito</option>
+            <option value='credito' selected='{{ formaPagamento == "credito" ? selected : "" }}'>Crédito</option>
+          </select>
+          
+          <div *ngIf="formaPagamentoPrimitivo == false">
+            <div *ngIf="formaPagamentoValido; else msgFormaPagamentoInvalido">
+            </div>
+            <ng-template #msgFormaPagamentoInvalido>
+              <small class="form-text text-danger">Selecione uma forma de pagamento</small>
+            </ng-template>
+          </div>
+          
+        </div>
+      </div>
+      
+      <hr />
+      <div class="text-center py-3 bt-philosopher-font">
+        <button 
+        type="button" 
+        class="btn btn-success btn-lg font-weight-bold" 
+        [disabled]="formValido()"
+        (click)="confirmarCompra()">Cofirmar compra</button>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<ng-template #carrinhoVazio>
+  <h1 class='text-center'>Seu carrinho nao tem itens</h1>
+</ng-template>
+
+<div *ngIf="idPedidoCompra !== undefined">
+  <app-ordem-compra-sucesso [idPedido]="idPedidoCompra"></app-ordem-compra-sucesso>
+</div>
+</div>
+
+
+<!-- <button (click)="debug()" style="margin-top: 500px">debug</button> -->

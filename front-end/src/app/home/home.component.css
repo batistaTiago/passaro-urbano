@@ -1,0 +1,131 @@
+.bt-bg-transparent {
+    -webkit-background: transparent;
+    -o-background: transparent;
+    -ms-background: transparent;
+    -moz-background: transparent;
+    background: transparent;
+}
+
+.bt-white-carousel-control {
+    color: #eee;
+}
+
+.bt-white-carousel-control:hover {
+    color: #ccc;
+}
+
+.bt-white-carousel-control:visited {
+    color: #eee;
+}
+
+.bt-white-carousel-control:focus {
+    color: #eee;
+}
+
+.carousel-item a {
+    text-decoration: none;
+}
+
+
+
+
+
+#carrossel-header {
+    font-size: 2.75em;
+    /* text-shadow: 2px 2px 15px #0275d8; */
+    text-shadow: 2px 2px 15px black;
+}
+
+#carrossel-subheader {
+    font-size: 1em;
+}
+
+#carrossel-titulo {
+    font-size: 1.5em
+}
+
+#carrossel-preco {
+    font-size: 1.85em
+}
+
+
+@media (min-width: 576px) {
+    
+    #carrossel-header {
+        font-size: 4.5em;
+    }
+    
+    #carrossel-subheader {
+        font-size: 1.5em;
+    }
+
+    #carrossel-titulo {
+        font-size: 2em
+    }
+
+    #carrossel-preco {
+        font-size: 1.65em
+    }
+ }
+
+ @media (min-width: 768px) {
+    
+    #carrossel-header {
+    
+    }
+    
+    #carrossel-subheader {
+        
+    }
+
+    #carrossel-titulo {
+        font-size: 2em
+    }
+
+    #corrossel-anunciante {
+        font-size: 0.7em;
+    }
+
+    #carrossel-preco {
+
+    }
+ }
+
+ @media (min-width: 992px) {
+    
+    #carrossel-header {
+    
+    }
+    
+    #carrossel-subheader {
+        
+    }
+
+    #carrossel-titulo {
+        font-size: 2.5em
+    }
+
+    #corrossel-anunciante {
+        font-size: 0.85em;
+    }
+
+    #carrossel-preco {
+        font-size: 1.85em
+    }
+ } 
+ 
+ 
+ @media (min-width: 1200px) {
+    #carrossel-titulo {
+        font-size: 3em
+    }
+
+    #corrossel-anunciante {
+        font-size: 1em;
+    }
+
+    #carrossel-preco {
+        font-size: 2.15em
+    }
+
+ }
