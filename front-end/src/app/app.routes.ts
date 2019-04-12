@@ -2,6 +2,10 @@ import { Routes } from '@angular/router'
 
 import { HomeComponent } from "./home/home.component";
 
+import { AdminComponent } from "./admin/admin.component";
+import { LoginComponent } from "./admin/login/login.component";
+import { CadastroComponent } from "./admin/cadastro/cadastro.component";
+
 import { OfertaComponent } from './oferta/oferta.component';
 import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
 import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
@@ -15,11 +19,18 @@ export const ROUTES: Routes = [
     { path: "diversao", component: CategoriasComponent },
     { path: "festas", component: CategoriasComponent },
     { path: "oferta", component: OfertaComponent },
-    { path: 'oferta/:id', component: OfertaComponent,
-        children:  [
+    {
+        path: 'oferta/:id', component: OfertaComponent,
+        children: [
             { path: 'como-usar', component: ComoUsarComponent },
             { path: 'onde-fica', component: OndeFicaComponent }
         ]
     },
-    { path: 'ordem-compra', component: OrdemCompraComponent }
+    { path: 'ordem-compra', component: OrdemCompraComponent },
+    { path: 'admin', component: AdminComponent ,
+      children: [
+        { path: 'login', component: LoginComponent },
+        { path: 'cadastro', component: CadastroComponent }
+      ]
+    }
 ]

@@ -18,6 +18,9 @@ import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
 import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component';
 import { CarrinhoService } from './services/carrinho.service';
+import { AdminComponent } from './admin/admin.component';
+import { CadastroComponent } from './admin/cadastro/cadastro.component';
+import { LoginComponent } from './admin/login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { CarrinhoService } from './services/carrinho.service';
     ComoUsarComponent,
     OndeFicaComponent,
     OrdemCompraComponent,
-    OrdemCompraSucessoComponent
+    OrdemCompraSucessoComponent,
+    AdminComponent,
+    CadastroComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
