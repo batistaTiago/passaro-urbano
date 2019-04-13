@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { OfertasService } from '../services/ofertas.service';
-import { Oferta } from '../shared/oferta.model';
+import { OfertasService } from '../../services/ofertas.service';
+import { Oferta } from '../../shared/oferta.model';
 
 @Component({
   selector: 'app-home',
@@ -42,11 +42,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if ($('.carousel-item.active').length) {
-      console.log('há itens ativos, não farei nada')
-    } else {
+    if ($('.carousel-item.active').length == 0) {
       $('.carousel-item:first').addClass('active')
-    }  
+    }
   }
 
   public debug() {

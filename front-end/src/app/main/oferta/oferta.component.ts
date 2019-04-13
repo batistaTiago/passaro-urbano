@@ -2,9 +2,9 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 
-import { Oferta } from '../shared/oferta.model';
-import { OfertasService } from '../services/ofertas.service';
-import { CarrinhoService } from '../services/carrinho.service';
+import { Oferta } from '../../shared/oferta.model';
+import { OfertasService } from '../../services/ofertas.service';
+import { CarrinhoService } from '../../services/carrinho.service';
 
 
 @Component({

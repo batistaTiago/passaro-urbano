@@ -1,16 +1,16 @@
 import { Routes } from '@angular/router'
 
-import { HomeComponent } from "./home/home.component";
+import { HomeComponent } from "./main/home/home.component";
 
 import { AdminComponent } from "./admin/admin.component";
 import { LoginComponent } from "./admin/login/login.component";
 import { CadastroComponent } from "./admin/cadastro/cadastro.component";
 
-import { OfertaComponent } from './oferta/oferta.component';
-import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
-import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
-import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
-import { CategoriasComponent } from './categorias/categorias.component';
+import { OfertaComponent } from './main/oferta/oferta.component';
+import { ComoUsarComponent } from './main/oferta/como-usar/como-usar.component';
+import { OndeFicaComponent } from './main/oferta/onde-fica/onde-fica.component';
+import { OrdemCompraComponent } from './main/ordem-compra/ordem-compra.component';
+import { CategoriasComponent } from './main/categorias/categorias.component';
 
 
 export const ROUTES: Routes = [

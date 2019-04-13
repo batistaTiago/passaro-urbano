@@ -1,10 +1,9 @@
-import { Oferta } from '../shared/oferta.model';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_URL } from '../app.constants';
 import { Observable } from 'rxjs'
 
-import { map, retry } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { Pedido } from '../shared/pedido.model';
 
 
@@ -16,8 +15,6 @@ export class OrdemCompraService {
     }
 
     public efetivarCompra(pedido: Pedido): Observable<number> {
-        
-        console.log('efetuando requisicao')
 
         let headers = new HttpHeaders({
             'Content-Type':'application/json'

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Endereco } from '../shared/endereco.model';
-import { Pedido } from '../shared/pedido.model';
-import { ItemCarrinho } from '../shared/item-carrinho.model';
+import { Endereco } from '../../shared/endereco.model';
+import { Pedido } from '../../shared/pedido.model';
+import { ItemCarrinho } from '../../shared/item-carrinho.model';
 
-import { OrdemCompraService } from '../services/ordem-compra.service';
-import { CarrinhoService } from '../services/carrinho.service';
-import { CepService } from '../services/cep.service';
+import { OrdemCompraService } from '../../services/ordem-compra.service';
+import { CarrinhoService } from '../../services/carrinho.service';
+import { CepService } from '../../services/cep.service';
 
 import { Observable, Subject, of } from 'rxjs'
 import { switchMap, debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators'
