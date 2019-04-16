@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Oferta } from '../../shared/oferta.model';
+import { Authenticator } from '../../services/auth.service'
 import { OfertasService } from '../../services/ofertas.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -11,7 +12,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class CadastrarOfertaComponent implements OnInit {
 
-  constructor(private ofertasService: OfertasService) { }
+  constructor(
+    private ofertasService: OfertasService,
+    private authenticator: Authenticator) { }
 
   ngOnInit() {
   }
@@ -19,7 +22,6 @@ export class CadastrarOfertaComponent implements OnInit {
   public formNovaOferta: FormGroup = new FormGroup(
     {
       'titulo': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.max(20)]),
-      'anunciante': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.max(20)]),
       'descricao': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.max(256)]),
       'preco': new FormControl(null, [Validators.required, Validators.min(0.01)]),
       'categoria': new FormControl(null, [Validators.required])
@@ -48,7 +50,7 @@ export class CadastrarOfertaComponent implements OnInit {
         this.formNovaOferta.value.categoria,
         this.formNovaOferta.value.titulo,
         this.formNovaOferta.value.descricao,
-        this.formNovaOferta.value.anunciante,
+        this.authenticator.getUserInfo()[2],
         this.formNovaOferta.value.preco
       )
 

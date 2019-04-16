@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 import { Oferta } from '../../shared/oferta.model';
 import { OfertasService } from '../../services/ofertas.service';
 import { CarrinhoService } from '../../services/carrinho.service';
+import { Authenticator } from '../../services/auth.service';
 
 
 @Component({
@@ -15,22 +16,18 @@ import { CarrinhoService } from '../../services/carrinho.service';
 })
 export class OfertaComponent implements OnInit, AfterViewChecked {
 
-  private route: ActivatedRoute
 
   public indexImagemSelecionada: number = 0
-
-  private ofertasService: OfertasService
-  private carrinhoService: CarrinhoService
 
   public oferta: Oferta = new Oferta()
 
   constructor(
-    route: ActivatedRoute,
-    ofertasService: OfertasService,
-    carrinhoService: CarrinhoService) {
-    this.route = route
-    this.ofertasService = ofertasService
-    this.carrinhoService = carrinhoService
+    private route: ActivatedRoute,
+    private ofertasService: OfertasService,
+    private carrinhoService: CarrinhoService,
+    private authenticator: Authenticator,
+    private router: Router) {
+
   }
 
   public imageClicked(event: Event) {
@@ -61,7 +58,12 @@ export class OfertaComponent implements OnInit, AfterViewChecked {
   }
 
   public adicionarAoCarrinho() {
-    this.carrinhoService.incluirItem(this.oferta)
+    if (this.authenticator.usuarioAutenticado()) {
+      this.carrinhoService.incluirItem(this.oferta)
+    } else {
+      this.router.navigate(['/login'])
+    }
+    
   }
 
   ngOnInit() {

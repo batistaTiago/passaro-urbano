@@ -5,7 +5,7 @@ export class ItemCarrinho {
         public imagem: object,
         public titulo: string,
         public descricao: string,
-        public valor: number,
+        public preco: number,
         public quantidade: number
     ) {}
 

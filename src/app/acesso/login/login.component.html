@@ -1,0 +1,35 @@
+<div class="container mt-3">
+
+  <h1 class="text-center text-light mb-3">Login</h1>
+
+  <form [formGroup]="formLogin">
+    <div class="row d-flex justify-content-center">
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Email</span>
+        </div>
+        <input class="form-control" type="email" formControlName="email">
+      </div>
+    
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Senha</span>
+        </div>
+        <input class="form-control" type="password" formControlName="senha">
+      </div>
+
+      <div class="input-group form-text text-danger" *ngIf="displayInvalidFeedback === true" >
+          <h3 class="text-center">Email ou senha inválidos, por favor cheque suas credenciais.</h3>
+      </div>
+  
+      <div>
+        <button #submitButton class="btn btn-lg btn-outline-success" type="button" (click)="submeterFormLogin(submitButton)">Login</button>
+      </div>
+      
+  
+    </div>
+  </form>
+
+
+</div>

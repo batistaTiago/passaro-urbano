@@ -12,6 +12,14 @@ export class CarrinhoService {
     private itens: Array<ItemCarrinho> = []
 
     public getItems() {
+        
+        if (this.itens.length == 0) {
+            const itensCarrinhoLocalStorage = localStorage.getItem('itensCarrinho')
+            if (itensCarrinhoLocalStorage != null && itensCarrinhoLocalStorage != undefined) {
+                this.itens = JSON.parse(itensCarrinhoLocalStorage)
+            }
+        }
+
         return this.itens
     }
 
@@ -38,6 +46,8 @@ export class CarrinhoService {
             }
     
             this.itens.push(itemCarrinho)
+
+            localStorage.setItem('itensCarrinho', JSON.stringify(this.itens))
         }
     }
 
@@ -68,7 +78,7 @@ export class CarrinhoService {
     public getValorTotal(): number {
         let total: number = 0
         for (let item of this.itens) {
-            total += item.valor * item.quantidade
+            total += item.preco * item.quantidade
         }
         return total
     }

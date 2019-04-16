@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OfertasService } from '../../services/ofertas.service';
+import { Authenticator } from '../../services/auth.service';
 import { Oferta } from '../../shared/oferta.model';
 
 import { Observable, Subject, of } from 'rxjs'
@@ -13,12 +14,13 @@ import { switchMap, debounceTime, distinctUntilChanged, catchError } from 'rxjs/
 })
 export class TopoComponent implements OnInit {
 
-  private ofertasService: OfertasService;
   public ofertasObs: Observable<Oferta[]>
   private subjectPesquisa: Subject<string> = new Subject<string>()
 
-  constructor(service: OfertasService) {
-    this.ofertasService = service
+  constructor(
+    private ofertasService: OfertasService,
+    private authenticator: Authenticator) { 
+
   }
 
   ngOnInit() {
@@ -39,6 +41,14 @@ export class TopoComponent implements OnInit {
         return of<Oferta[]>([]); 
       })
     )
+  }
+
+  public usuarioLogado() {
+    return this.authenticator.usuarioAutenticado()
+  }
+
+  public logout() {
+    this.authenticator.logout()
   }
 
   public searchBarTextFieldKeyUp(searchQuery: string) {

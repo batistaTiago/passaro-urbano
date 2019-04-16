@@ -1,0 +1,9 @@
+<p *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === true">
+  <a routerLink="/cadastrar-oferta" class="btn btn-outline-info">Cadastrar Nova Oferta</a>
+</p>
+
+<p *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === false">
+  página de cliente
+</p>
+
+<button (click)="test()">test</button>

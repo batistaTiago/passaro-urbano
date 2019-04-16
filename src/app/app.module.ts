@@ -18,12 +18,16 @@ import { OndeFicaComponent } from './main/oferta/onde-fica/onde-fica.component';
 import { OrdemCompraComponent } from './main/ordem-compra/ordem-compra.component';
 import { OrdemCompraSucessoComponent } from './main/ordem-compra-sucesso/ordem-compra-sucesso.component';
 import { CarrinhoService } from './services/carrinho.service';
-import { AdminComponent } from './admin/admin.component';
-import { CadastroComponent } from './admin/cadastro/cadastro.component';
-import { LoginComponent } from './admin/login/login.component';
-import { CadastrarOfertaComponent } from './admin/cadastrar-oferta/cadastrar-oferta.component';
+import { AcessoComponent } from './acesso/acesso.component';
+import { CadastroComponent } from './acesso/cadastro/cadastro.component';
+import { LoginComponent } from './acesso/login/login.component';
+import { CadastrarOfertaComponent } from './acesso/cadastrar-oferta/cadastrar-oferta.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { Authenticator } from './services/auth.service';
+// import { LoggedAuthGuard } from './services/auth-guard-logged.service';
+import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
+import { ProfileComponent } from './acesso/profile/profile.component';
+import { VendorAuthGuard } from './services/auth-guard-vendor.service';
 
 
 @NgModule({
@@ -38,10 +42,11 @@ import { Authenticator } from './services/auth.service';
     OndeFicaComponent,
     OrdemCompraComponent,
     OrdemCompraSucessoComponent,
-    AdminComponent,
+    AcessoComponent,
     CadastroComponent,
     LoginComponent,
-    CadastrarOfertaComponent
+    CadastrarOfertaComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,10 @@ import { Authenticator } from './services/auth.service';
     { provide:LOCALE_ID, useValue: 'pt' },
     CarrinhoService,
     Authenticator,
-    AuthGuard
+    AuthGuard,
+    // LoggedAuthGuard,
+    UnloggedAuthGuard,
+    VendorAuthGuard
   ],
   bootstrap: [AppComponent]
 })
