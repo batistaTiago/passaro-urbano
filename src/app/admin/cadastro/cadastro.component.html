@@ -1,0 +1,48 @@
+<div class="container">
+
+  <h1 class="text-center">Cadastre-se</h1>
+
+  <form [formGroup]="formCadastro">
+    
+    <div>
+      
+    </div>
+    <div class="form-group">
+      <input 
+      placeholder="email"
+      type="email"
+      formControlName="email"
+      class="form-control {{ formCadastro.get('email').pristine ? '' : (formCadastro.get('email').valid ? 'is-valid' : 'is-invalid') }}"
+    >
+    </div>
+    
+    <div class="form-group">
+    <input 
+      placeholder="senha"
+      type="password"
+      formControlName="senha"
+      class="form-control {{ formCadastro.get('senha').pristine ? '' : (formCadastro.get('senha').valid ? 'is-valid' : 'is-invalid') }}"
+    >
+  </div>
+    
+    <div class="form-group">
+    <select 
+      formControlName="tipoConta"
+      class="form-control {{ formCadastro.get('tipoConta').pristine ? '' : (formCadastro.get('tipoConta').valid ? 'is-valid' : 'is-invalid') }}"
+      >
+      <option>Consumidor</option>
+      <option>Anunciante</option>
+    </select>
+  </div>
+    
+  <div class="d-flex justify-content-center">
+    
+    <button 
+    #cadastrarButton 
+    class="btn btn-outline-success btn-lg"
+    (click)="cadastrarButtonClick(cadastrarButton)">Cadastrar</button>
+  
+  </div>
+    
+  </form>
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="oferta" *ngIf="oferta !== undefined && oferta.imagens !== undefined && oferta.imagens.length">
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col">
+        <div class="text-center text-light font-weight-bold bt-quesha-font" id="titulo-oferta">{{ oferta.titulo }}</div>
+        <h5 class="text-center text-light d-md-block bt-philosopher-font" id="descricao-oferta"><small>{{ oferta.descricao }}</small></h5>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row mb-3 mt-md-3">
+      <div class="col-12 offset-lg-2 col-lg-8">
+        <div class="img_capa text-center">
+          <img [src]="oferta.imagens[0].url" id="featured-image" class="img-fluid bt-img-round-10"/>
+        </div>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row px-1 px-md-3">
+      <div class="col-4 col-sm-3 mb-3" *ngFor="let imagem of oferta.imagens">
+        <img [src]="imagem.url" (click)="imageClicked($event)" class="img-fluid bt-img-round-10 bt-img-galeria" />
+      </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row pt-2 pb-0">
+      <div class="col bt-text-destaque d-flex align-items-center justify-content-center bt-quesha-font" id="div-preco">
+        <div>POR APENAS:&nbsp;<strong>{{ oferta.preco | currency:'BRL':'symbol-narrow' }}</strong></div>
+      </div>
+      
+    </div> 
+    
+    
+    <div class="row">
+      <div class="col text-center">
+        <button type="button" class="btn btn-warning btn-lg bt-philospher-font" (click)="adicionarAoCarrinho()">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div> 
+  
+  <hr>
+  
+  <nav class="detalhes-oferta bg-light pb-2 mb-3 bt-rounded-corners-5">
+    <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link bt-philosopher-font" routerLinkActive='active' routerLink="como-usar" id="como-usar-tab" data-toggle="tab" role="tab" aria-controls="como-usar" aria-selected="true">Como Usar</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link bt-philosopher-font" routerLinkActive='active' routerLink="onde-fica" id="onde-fica-tab" data-toggle="tab" role="tab" aria-controls="onde-fica" aria-selected="false">Onde fica</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <router-outlet></router-outlet>
+    </div>
+  </nav>
+  
+</div>

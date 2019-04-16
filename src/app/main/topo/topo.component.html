@@ -1,0 +1,130 @@
+<div class="fixed-top bg-light">
+  <nav class="navbar navbar-light">
+    <div class="container d-block">
+      <div class="row">
+        <div class="col-3 col-md-4 col-lg-3 bt-border-box">
+          <a routerLink='/' class="navbar-brand">
+            <div class="sr-only">
+                Pássaro Urbano
+            </div>
+            <img src="/assets/logo.png" />
+          </a>
+        </div>
+        <div class="col-2 offset-7 justify-content-end align-items-center d-md-none d-flex bt-border-box">
+          <a routerLink="/ordem-compra"><img src="/assets/carrinho.png" /></a>
+        </div>
+        
+        
+        <div class="col-12 col-md-6 col-lg-7 mx-0 px-md-2 my-3 my-md-0 d-flex align-items-center bt-border-box">
+          <div class="input-group bt-rounded-corners-5">
+            <div class="input-group-prepend d-none d-lg-block">
+              <label class="input-group-text bt-philosopher-font">Pesquisar</label>
+            </div>
+            <input 
+            class="form-control align-self-center bt-philosopher-font" 
+            type='text' 
+            placeholder="Digite sua pesquisa"
+            #searchBarTextField
+            (keyup)="searchBarTextFieldKeyUp(searchBarTextField.value)"
+            (click)="searchBarTextFieldKeyUp(searchBarTextField.value)"
+            (blur)="clearObserverOfertas()"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-info form-control">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-2 col-lg-1 offset-lg-1 justify-content-end align-items-center d-none d-md-flex bt-border-box">
+          <a routerLink="/ordem-compra">
+            <img src="/assets/carrinho.png" />
+          </a>
+        </div>
+
+
+        
+        <ul id='search-results' class="list-group bt-vertical-scrolling-list bt-mh-25">
+          <a 
+          [routerLink]="['oferta/', oferta.id]" 
+          class="list-group-item text-dark bt-hover-bg-gray" 
+          (click)="clearObserverOfertas()"
+          *ngFor="let oferta of ofertasObs | async">  
+            <div class="container">
+              <div class="row" style="border-bottom: 1px solid #888;">
+                
+                <div class="col-4 col-lg-2 d-flex align-items-center">
+                  <img [src]="oferta.imagens[0].url" class="w-100" />
+                </div>
+                
+                <div class="col-8 col-lg-10">
+                  <h5 class="text-center text-dark ml-md-3 lh-30 d-inline font-weight-bold" id="oferta-titulo">{{ oferta.titulo }}</h5>
+                  <h6 class="text-center d-block" id="oferta-descricao">{{ oferta.descricao }}</h6>
+                </div>
+                
+              </div>
+            </div>
+          </a>
+        </ul>
+      </div>
+    </div>
+
+  </nav>
+  
+  <div class="menu bt-vertical-border">
+    <div class="container">
+      <div class="row d-flex justify-content-around my-0 px-sm-3">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 mx-md-5 text-primary bt-philosopher-font active" routerLink='/restaurantes' routerLinkActive='active'>Restaurantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 mx-md-5 text-primary bt-philosopher-font" routerLink='/diversao' routerLinkActive='active'>Diversão</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 mx-md-5 text-primary bt-philosopher-font" routerLink='/festas' routerLinkActive='active'>Festas</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+    <div class="menu">
+  <div class="container">
+    <div class="row d-flex justify-content-between my-0 px-sm-3">
+      <div class="col-6 d-flex justify-content-start">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 text-primary active" routerLink='/restaurantes' routerLinkActive='active'>Restaurantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 text-primary" routerLink='/diversao' routerLinkActive='active'>Diversão</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 text-primary" routerLink='/festas' routerLinkActive='active'>Festas</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 text-primary" routerLink='/cadastro' routerLinkActive='active'>Cadastro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link py-0 my-1 text-primary" routerLink='/login' routerLinkActive='active'>Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+</div>
+  -->
+</div>
+
+
+<div>
+  
+</div>
