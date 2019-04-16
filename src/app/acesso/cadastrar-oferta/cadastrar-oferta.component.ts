@@ -50,7 +50,7 @@ export class CadastrarOfertaComponent implements OnInit {
         this.formNovaOferta.value.categoria,
         this.formNovaOferta.value.titulo,
         this.formNovaOferta.value.descricao,
-        this.authenticator.getUserInfo()[1].nome,
+        [this.authenticator.getUserInfo()[1].nome, btoa(this.authenticator.getUserInfo()[1].email)],
         this.formNovaOferta.value.preco
       )
 

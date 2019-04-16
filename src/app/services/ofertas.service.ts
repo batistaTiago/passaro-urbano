@@ -72,7 +72,7 @@ export class OfertasService {
                                     if (oferta.categoria.toLowerCase() == categoria.toLowerCase()) {
                                         oferta.id = childSnapshot.key
                                         ofertas.push(oferta)
-                                    } 
+                                    }
                                     // else {
                                     //     console.log(oferta.categoria.toLowerCase())
                                     //     console.log(categoria.toLowerCase())
@@ -82,6 +82,30 @@ export class OfertasService {
 
                             resolve(ofertas.reverse())
                             // console.log(ofertas)
+                        }
+                    )
+            }
+        )
+    }
+
+    public getOfertasPorAnunciante(anunciante: string) {
+        return new Promise<Oferta[]>(
+            (resolve: any, reject: any) => {
+                firebase.database().ref('ofertas')
+                    .orderByKey()
+                    .once('value')
+                    .then(
+                        (snapshot: any) => {
+                            let results: Oferta[] = []
+                            snapshot.forEach(
+                                (element: any) => {
+                                    let oferta = element.val()
+                                    if (oferta.anunciante[1] === anunciante) {
+                                        results.push(oferta)
+                                    }
+                                }
+                            )
+                            console.log(results)
                         }
                     )
             }
@@ -152,7 +176,7 @@ export class OfertasService {
 
     private publicarImagens(oferta: Oferta, files: Array<File>): Promise<any>[] {
 
-        let keyOferta = btoa(Date.now() + oferta.anunciante + oferta.categoria)
+        let keyOferta = btoa(Date.now() + oferta.anunciante[0] + oferta.categoria)
 
         let promises: any[] = []
 

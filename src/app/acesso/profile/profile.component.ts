@@ -1,22 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Authenticator } from '../../services/auth.service';
+import { OfertasService } from '../../services/ofertas.service'
+import { Usuario } from '../../shared/usuario.model';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  providers: [ OfertasService ]
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private authenticator: Authenticator) { }
+  constructor(private authenticator: Authenticator,
+    private ofertaService: OfertasService) { }
 
-  private userIsVendor: boolean
+  private userInfo: Usuario
 
   public getUserIsVendor(): boolean {
-    if (this.userIsVendor === null || this.userIsVendor === null) {
+
+    if (this.userInfo.isVendor === null || this.userInfo.isVendor === null) {
+
       this.updateIsVendorStatus()
     }
-    return this.userIsVendor
+    return this.userInfo.isVendor
   }
 
   ngOnInit() {
@@ -24,11 +30,11 @@ export class ProfileComponent implements OnInit {
   }
 
   private updateIsVendorStatus() {
-    this.userIsVendor = this.authenticator.getUserInfo()[1].isVendor
+    this.userInfo = this.authenticator.getUserInfo()[1]
   }
 
   public test() {
-    console.log(this.authenticator.getUserInfo())
+    this.ofertaService.getOfertasPorAnunciante(btoa(this.userInfo.email))
   }
 
 

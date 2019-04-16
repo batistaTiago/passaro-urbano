@@ -21,7 +21,7 @@
                 <a [routerLink]="['/oferta', destaque.id]" class="col-12 col-md-6 col-lg-5 text-light d-flex flex-column">
                   <div class="my-auto p-2">
                     <div class="text-center bt-philosopher-font mb-0" id="carrossel-titulo"> {{ destaque.titulo }}</div>
-                    <div class="text-right d-none d-md-block bt-philosopher-font" id="corrossel-anunciante">Por: <span class="font-weight-bold"> {{ destaque.anunciante }} </span></div>
+                    <div class="text-right d-none d-md-block bt-philosopher-font" id="corrossel-anunciante">Por: <span class="font-weight-bold"> {{ destaque.anunciante[0] }} </span></div>
                     <div class="text-center bt-philosopher-font mt-3" id="carrossel-preco"><span class="d-none d-sm-inline mr-2">Apenas</span> <span class="font-weight-bold text-warning bt-highlighted-text-black">{{ destaque.preco | currency:'BRL':'symbol' }}</span></div>
                   </div>
                   </a>
