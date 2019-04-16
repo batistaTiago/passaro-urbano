@@ -28,6 +28,12 @@ export class CadastroComponent implements OnInit {
   public cadastrarButtonClick(sender: HTMLElement) {
     sender.blur()
 
+    Object.keys(this.formCadastro.controls).forEach(
+      (key: string) => {
+        this.formCadastro.get(key).markAsDirty()
+      }
+    )
+
     if (this.formCadastro.valid) {
 
       let usuario = new Usuario(

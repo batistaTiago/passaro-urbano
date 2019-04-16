@@ -14,9 +14,9 @@ export class CarrinhoService {
     public getItems() {
         
         if (this.itens.length == 0) {
-            const itensCarrinhoLocalStorage = localStorage.getItem('itensCarrinho')
-            if (itensCarrinhoLocalStorage != null && itensCarrinhoLocalStorage != undefined) {
-                this.itens = JSON.parse(itensCarrinhoLocalStorage)
+            const itensCarrinho = localStorage.getItem('itensCarrinho')
+            if (itensCarrinho != null && itensCarrinho != undefined) {
+                this.itens = JSON.parse(itensCarrinho)
             }
         }
 

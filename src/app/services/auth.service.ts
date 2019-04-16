@@ -6,42 +6,33 @@ import { Usuario } from '../shared/usuario.model';
 @Injectable()
 export class Authenticator {
 
-  private authToken: string
-  private userIsVendor: boolean
-  private userName: string
+  private __authToken: string
+  private __usuario: Usuario
 
   constructor(private router: Router) { }
 
   private getTokenId(): string {
     const storedToken = localStorage.getItem('userToken')
 
-    if (this.authToken === undefined && storedToken !== null) {
-      this.authToken = storedToken
+    if (this.__authToken === undefined && storedToken !== null) {
+      this.__authToken = storedToken
     }
 
-    return this.authToken
+    return this.__authToken
   }
 
-  private getUserIsVendor(): boolean {
-    const storedToken = localStorage.getItem('userIsVendor')
+  private getUserObject(): Usuario {
+    const storedToken = localStorage.getItem('userInfo')
 
-    if (this.userIsVendor === undefined && storedToken !== null) {
-      this.userIsVendor = storedToken === "true" ? true : false
+    if (this.__usuario === undefined && storedToken !== null) {
+      this.__usuario = JSON.parse(storedToken)
     }
-    return this.userIsVendor
+
+    return this.__usuario
   }
 
-  private getUserName(): string {
-    const storedToken = localStorage.getItem('userName')
-
-    if (this.userName === undefined && storedToken !== null) {
-      this.userName = storedToken
-    }
-    return this.userName
-  }
-
-  public getUserInfo(): [string, boolean, string] {
-    return [this.getTokenId(), this.getUserIsVendor(), this.getUserName()]
+  public getUserInfo(): [string, Usuario] {
+    return [this.getTokenId(), this.getUserObject()]
   }
 
   public cadastrarUsuario(usuario: Usuario, senha: string) {
@@ -80,13 +71,10 @@ export class Authenticator {
                       .once('value')
                       .then(
                         (snapshot: any) => {
-                          console.log(snapshot.val())
-                          this.authToken = idToken
-                          this.userIsVendor = snapshot.val().isVendor
-                          this.userName = snapshot.val().nome
-                          localStorage.setItem('userToken', this.authToken)
-                          localStorage.setItem('userIsVendor', this.userIsVendor ? "true" : "false")
-                          localStorage.setItem('userName', this.userName)
+                          this.__authToken = idToken
+                          this.__usuario = snapshot.val()
+                          localStorage.setItem('userToken', idToken)
+                          localStorage.setItem('userInfo', JSON.stringify(snapshot.val()))
                           resolve(true)
                           this.router.navigate(['/'])
                         }
@@ -94,6 +82,8 @@ export class Authenticator {
                       .catch(
                         (error: Error) => {
                           console.log(error)
+                          localStorage.removeItem('userToken')
+                          localStorage.removeItem('userInfo')
                           resolve(false)
                         }
                       )
@@ -102,6 +92,8 @@ export class Authenticator {
                 .catch(
                   (error: Error) => {
                     console.log(error)
+                    localStorage.removeItem('userToken')
+                    localStorage.removeItem('userInfo')
                     resolve(false)
                   }
                 )
@@ -109,6 +101,8 @@ export class Authenticator {
           ).catch(
             (error: Error) => {
               console.log(error)
+              localStorage.removeItem('userToken')
+              localStorage.removeItem('userInfo')
               reject(false)
             }
           )
@@ -157,10 +151,10 @@ export class Authenticator {
     firebase.auth().signOut().then(
       (result: any) => {
         localStorage.removeItem('userToken')
-        localStorage.removeItem('userIsVendor')
-        localStorage.removeItem('userName')
+        localStorage.removeItem('userInfo')
         localStorage.removeItem('itensCarrinho')
-        this.authToken = undefined
+        this.__authToken = undefined
+        this.__usuario = undefined
         if (shouldRedirect) {
           this.router.navigate(['/login'])
         }

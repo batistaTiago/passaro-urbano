@@ -15,10 +15,8 @@ export class VendorAuthGuard implements CanActivate {
         const canAccess = 
         userInfo[0] !== undefined && 
         userInfo[0] !== null && 
-        userInfo[1] === true && 
-        userInfo[2] !== undefined && 
-        userInfo[2] !== null && 
-        userInfo[2] !== ''
+        userInfo[1] !== undefined && 
+        userInfo[1] !== null
 
         if (!canAccess) {
             this.router.navigate(['/'])

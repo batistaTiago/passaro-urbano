@@ -24,7 +24,6 @@ import { LoginComponent } from './acesso/login/login.component';
 import { CadastrarOfertaComponent } from './acesso/cadastrar-oferta/cadastrar-oferta.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { Authenticator } from './services/auth.service';
-// import { LoggedAuthGuard } from './services/auth-guard-logged.service';
 import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
 import { ProfileComponent } from './acesso/profile/profile.component';
 import { VendorAuthGuard } from './services/auth-guard-vendor.service';
@@ -59,7 +58,6 @@ import { VendorAuthGuard } from './services/auth-guard-vendor.service';
     CarrinhoService,
     Authenticator,
     AuthGuard,
-    // LoggedAuthGuard,
     UnloggedAuthGuard,
     VendorAuthGuard
   ],

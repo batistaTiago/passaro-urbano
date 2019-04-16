@@ -24,11 +24,11 @@ export class ProfileComponent implements OnInit {
   }
 
   private updateIsVendorStatus() {
-    this.userIsVendor = this.authenticator.getUserInfo()[1]
+    this.userIsVendor = this.authenticator.getUserInfo()[1].isVendor
   }
 
   public test() {
-    console.log(this.getUserIsVendor())
+    console.log(this.authenticator.getUserInfo())
   }
 
 
