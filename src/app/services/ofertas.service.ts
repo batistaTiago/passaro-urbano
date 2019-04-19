@@ -100,12 +100,13 @@ export class OfertasService {
                             snapshot.forEach(
                                 (element: any) => {
                                     let oferta = element.val()
+                                    oferta.id = element.key
                                     if (oferta.anunciante[1] === anunciante) {
                                         results.push(oferta)
                                     }
                                 }
                             )
-                            console.log(results)
+                            resolve(results)
                         }
                     )
             }
@@ -174,17 +175,18 @@ export class OfertasService {
 
     }
 
-    private publicarImagens(oferta: Oferta, files: Array<File>): Promise<any>[] {
-
-        let keyOferta = btoa(Date.now() + oferta.anunciante[0] + oferta.categoria)
+    private uploadImagesToFirebase(keyOferta: string, files: Array<File>): Promise<any>[] {
 
         let promises: any[] = []
 
         files.forEach(
             (file: File) => {
                 let keyArquivo = btoa(file.name)
-                console.log('uploading file: ' + file.name)
-                let documentReference = firebase.storage().ref().child('images').child(keyOferta).child(keyArquivo)
+                let documentReference = firebase.storage()
+                                            .ref()
+                                            .child('images')
+                                            .child(keyOferta)
+                                            .child(keyArquivo)
 
                 promises.push(documentReference.put(file))
             }
@@ -194,12 +196,12 @@ export class OfertasService {
 
     }
 
-    private getUrls(oferta: Oferta, files: Array<File>): Promise<string[]> {
+    private publicarImagens(key: string, files: Array<File>): Promise<string[]> {
 
         return new Promise<any>(
             (resolve, reject) => {
                 Promise.all(
-                    this.publicarImagens(oferta, files)
+                    this.uploadImagesToFirebase(key, files)
                 ).then(
                     (resp) => {
                         let promises: Promise<string>[] = []
@@ -228,7 +230,8 @@ export class OfertasService {
     }
 
     public cadastrarOferta(oferta: Oferta, files: File[]) {
-        this.getUrls(oferta, files)
+
+        this.publicarImagens(oferta.getStorageKey(), files)
             .then(
                 (response: any) => {
                     response.forEach(
@@ -248,43 +251,6 @@ export class OfertasService {
                             console.log('concluido')
                         }
                     )
-
-                    // console.log(oferta)
-
-                    // const headers = new HttpHeaders()
-                    // .set('Content-Type', 'application/json')
-
-                    // console.log('enviando oferta para o back-end', oferta)
-
-                    // this.http.post(
-                    //     `${API_URL}/processar-cadastro-oferta`,
-                    //     oferta,
-                    //     { headers: headers }
-                    // )
-                    //     .toPromise()
-                    //     .then(
-                    //         (response: any) => {
-                    //             console.log(response)
-                    //         }
-                    //     )
-                    //     .catch(
-                    //         (erro: Error) => {
-                    //             console.log(erro)
-                    //         }
-                    //     )
-
-                    /*
-                    .pipe(
-                        map(
-                            (resposta: any) => {
-                                console.log(resposta)
-                                // return <number>resposta.id
-                            }
-                        )
-                    )
-                    */
-
-                    // console.log(postResponse)
                 }
             )
             .catch(
@@ -294,25 +260,45 @@ export class OfertasService {
             )
     }
 
-    // console.log(firebase.storage())
+    public atualizarImagensOferta(oferta: Oferta, imagens: File[]): Promise<any> {
 
+        return this.publicarImagens(oferta.storageKey, imagens)
+            .then(
+                (response: string[]) => {
+                    // let urls = oferta.imagens
+                    let urls = []
+                    response.forEach(
+                        (url: string) => {
+                            let urlObject = {
+                                url: url
+                            }
+                            urls.push(urlObject)
+                        }
+                    )
+                    console.log('atualizando urls de imagem da oferta ' + oferta.id + ' para:', urls)
+                    firebase.database()
+                        .ref('/ofertas')
+                        .child(oferta.id)
+                        .child('imagens')
+                        .set(urls)
+                }
+            )
+    }
 
-    // let headers = new HttpHeaders({
-    //     'Content-Type':'application/json'
-    // })
-
-
-    // let postResponse = this.http.post(
-    //     `${API_URL}/cadastrar-oferta`,
-    //     JSON.stringify(oferta),
-    //     { headers }
-    //     ).pipe(
-    //         map(
-    //             (resposta: any) => {
-    //               console.log(resposta, resposta)
-    //               return <number>resposta.id
-    //             }
-    //         )
-    //     )
-    // return postResponse
+    public atualizarOferta(oferta: Oferta) {
+        return firebase.database()
+            .ref('/ofertas')
+            .child(oferta.id)
+            .set(oferta)
+            .then(
+                (response: any) => {
+                    console.log('sucesso')
+                }
+            )
+            .catch(
+                (erro: Error) => {
+                    console.log('erro', erro)
+                }
+            )
+    }
 }

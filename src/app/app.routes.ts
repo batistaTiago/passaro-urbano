@@ -15,6 +15,7 @@ import { CategoriasComponent } from './main/categorias/categorias.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
 import { VendorAuthGuard } from './services/auth-guard-vendor.service';
+import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.component';
 
 
 export const ROUTES: Routes = [
@@ -53,6 +54,11 @@ export const ROUTES: Routes = [
   {
     path: 'cadastrar-oferta',
     component: CadastrarOfertaComponent,
+    canActivate: [ VendorAuthGuard ]
+  },
+  {
+    path: 'editar-oferta/:id',
+    component: EditarOfertaComponent,
     canActivate: [ VendorAuthGuard ]
   }
 

@@ -27,6 +27,7 @@ import { Authenticator } from './services/auth.service';
 import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
 import { ProfileComponent } from './acesso/profile/profile.component';
 import { VendorAuthGuard } from './services/auth-guard-vendor.service';
+import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { VendorAuthGuard } from './services/auth-guard-vendor.service';
     CadastroComponent,
     LoginComponent,
     CadastrarOfertaComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditarOfertaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,32 @@
-<p *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === true">
+<div *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === true">
+
+  <h1 class="text-center text-light text-uppercase">Minhas ofertas</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-6 text-light bt-red-border" *ngFor="let oferta of ofertas">
+        <div class="row d-flex align-items-center">
+          <div class="col-6">
+            <img [src]="oferta.imagens[0].url" class="img-fluid p-2">
+          </div>
+          <div class="col-6">
+            <h2 class="text-center">{{ oferta.titulo }}</h2>
+            <span>Categoria: {{ oferta.categoria }}</span>
+            <span 
+              class="text-center bt-philosopher-font mt-3 
+              font-weight-bold text-warning 
+              bt-highlighted-text-black">
+                {{ oferta.preco | currency:'BRL':'symbol' }}</span>
+            <a [routerLink]="['/editar-oferta', oferta.id]" class="btn btn-info btn-lg btn-block">Editar</a>
+            <!-- <button (click)="editarOfertaButtonClick($event, oferta)" class="btn btn-info btn-lg btn-block">Editar</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <a routerLink="/cadastrar-oferta" class="btn btn-outline-info">Cadastrar Nova Oferta</a>
-</p>
+</div>
 
 <p *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === false">
   página de cliente

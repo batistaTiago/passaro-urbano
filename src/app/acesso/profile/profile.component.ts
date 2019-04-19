@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Authenticator } from '../../services/auth.service';
 import { OfertasService } from '../../services/ofertas.service'
 import { Usuario } from '../../shared/usuario.model';
+import { Oferta } from '../../shared/oferta.model';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfileComponent implements OnInit {
     private ofertaService: OfertasService) { }
 
   private userInfo: Usuario
+  private ofertas: Oferta[] = []
 
   public getUserIsVendor(): boolean {
 
@@ -27,6 +29,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.updateIsVendorStatus()
+    if (this.userInfo.isVendor) {
+      this.ofertaService.getOfertasPorAnunciante(btoa(this.userInfo.email))
+      .then(
+        (ofertas: Oferta[]) => {
+          this.ofertas = ofertas
+        }
+      )
+    }
   }
 
   private updateIsVendorStatus() {
@@ -34,8 +44,14 @@ export class ProfileComponent implements OnInit {
   }
 
   public test() {
-    this.ofertaService.getOfertasPorAnunciante(btoa(this.userInfo.email))
+    for (let oferta of this.ofertas) {
+      console.log(oferta)
+    }
   }
 
+  public editarOfertaButtonClick(event: Event, oferta: Oferta) {
+    (<HTMLElement>event.target).blur()
+    console.log(oferta)
+  }
 
 }

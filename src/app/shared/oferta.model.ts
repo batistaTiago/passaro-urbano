@@ -8,7 +8,19 @@ export class Oferta {
         public preco: number = -1,
         public destaque: boolean = false,
         public imagens: Array<object> = [],
-        public id: number = -1) {
+        public id: string = '',
+        public storageKey: string = null) {
 
+    }
+
+    private setStorageKey() {
+       this.storageKey = btoa(Date.now() + this.anunciante[0] + this.categoria)
+    }
+
+    public getStorageKey() {
+        if (this.storageKey == null || this.storageKey == undefined) {
+            this.setStorageKey()
+        }
+        return this.storageKey
     }
 }
