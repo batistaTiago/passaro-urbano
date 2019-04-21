@@ -185,6 +185,8 @@ export class OfertasService {
 
         let key = oferta.storageKey
 
+        console.log(key)
+
         oferta.storageFileKeys = []
 
         files.forEach(
@@ -196,7 +198,9 @@ export class OfertasService {
             }
         )
 
-        firebase.database().ref('ofertas').child(oferta.id).child('storageFileKeys').set(oferta.storageFileKeys)
+        if (oferta.id) {
+            firebase.database().ref('ofertas').child(oferta.id).child('storageFileKeys').set(oferta.storageFileKeys)
+        }
 
         return promises
 
@@ -211,22 +215,25 @@ export class OfertasService {
                 ).then(
                     (resp) => {
                         let promises: Promise<string>[] = []
-                        resp.reverse().forEach(
+                        resp.forEach(
                             (r: any) => {
+                                console.log(r.name)
                                 promises.push(firebase.storage().ref(r.ref['location'].path).getDownloadURL())
                             }
                         )
                         Promise.all(
                             promises
-                        ).then(
+                        )
+                        .then(
                             (urls: string[]) => {
                                 resolve(urls)
                             }
-                        ).catch(
-                            (erro: Error) => {
-                                reject(erro)
-                            }
                         )
+                        // .catch(
+                        //     (erro: Error) => {
+                        //         reject(erro)
+                        //     }
+                        // )
                     }
                 )
             }
@@ -256,11 +263,11 @@ export class OfertasService {
                     )
                 }
             )
-            .catch(
-                (erro: Error) => {
-                    console.log(erro)
-                }
-            )
+            // .catch(
+            //     (erro: Error) => {
+            //         console.log(erro)
+            //     }
+            // )
     }
 
     public removerImagensOferta(oferta: Oferta): Promise<any> {
