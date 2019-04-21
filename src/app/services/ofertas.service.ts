@@ -175,41 +175,45 @@ export class OfertasService {
 
     }
 
-    private uploadImagesToFirebase(keyOferta: string, files: Array<File>): Promise<any>[] {
+    private uploadImagesToFirebase(oferta: Oferta, files: Array<File>): Promise<any>[] {
 
         let promises: any[] = []
+
+        if (oferta.storageKey === null || oferta.storageKey === undefined || oferta.storageKey === '') {
+            oferta.storageKey = btoa(Date.now() + oferta.anunciante[0] + oferta.titulo)
+        }
+
+        let key = oferta.storageKey
+
+        oferta.storageFileKeys = []
 
         files.forEach(
             (file: File) => {
                 let keyArquivo = btoa(file.name)
-                let documentReference = firebase.storage()
-                                            .ref()
-                                            .child('images')
-                                            .child(keyOferta)
-                                            .child(keyArquivo)
 
-                promises.push(documentReference.put(file))
+                oferta.storageFileKeys.push(keyArquivo)
+                promises.push(firebase.storage().ref().child('images').child(key).child(keyArquivo).put(file))
             }
         )
+
+        firebase.database().ref('ofertas').child(oferta.id).child('storageFileKeys').set(oferta.storageFileKeys)
 
         return promises
 
     }
 
-    private publicarImagens(key: string, files: Array<File>): Promise<string[]> {
+    private publicarImagens(oferta: Oferta, files: Array<File>): Promise<string[]> {
 
         return new Promise<any>(
             (resolve, reject) => {
                 Promise.all(
-                    this.uploadImagesToFirebase(key, files)
+                    this.uploadImagesToFirebase(oferta, files)
                 ).then(
                     (resp) => {
                         let promises: Promise<string>[] = []
                         resp.reverse().forEach(
                             (r: any) => {
-                                promises.push(firebase.storage()
-                                    .ref(r.ref['location'].path)
-                                    .getDownloadURL())
+                                promises.push(firebase.storage().ref(r.ref['location'].path).getDownloadURL())
                             }
                         )
                         Promise.all(
@@ -231,15 +235,14 @@ export class OfertasService {
 
     public cadastrarOferta(oferta: Oferta, files: File[]) {
 
-        this.publicarImagens(oferta.getStorageKey(), files)
+        this.publicarImagens(oferta, files)
             .then(
-                (response: any) => {
-                    response.forEach(
+                (imageUrls: string[]) => {
+                    imageUrls.forEach(
                         imageUrl => {
+                            console.log(imageUrl)
                             let urlOject = {
                                 url: imageUrl
-                                // url: btoa(imageUrl)
-                                // url: '1234'
                             }
                             oferta.imagens.push(urlOject)
                         }
@@ -260,29 +263,82 @@ export class OfertasService {
             )
     }
 
-    public atualizarImagensOferta(oferta: Oferta, imagens: File[]): Promise<any> {
+    public removerImagensOferta(oferta: Oferta): Promise<any> {
+        console.log('inicio da atualização')
+        console.log(oferta)
 
-        return this.publicarImagens(oferta.storageKey, imagens)
-            .then(
-                (response: string[]) => {
-                    // let urls = oferta.imagens
-                    let urls = []
-                    response.forEach(
-                        (url: string) => {
-                            let urlObject = {
-                                url: url
-                            }
-                            urls.push(urlObject)
+        let promises: Promise<any>[] = []
+
+        //deleta arquivos de imagem da oferta
+        if (oferta.storageFileKeys) {
+            for (let fileKey of oferta.storageFileKeys) {
+                // console.log('deletando arquivo: ' + oferta.storageKey + '/' + fileKey)
+                promises.push(firebase.storage().ref('images').child(oferta.storageKey).child(fileKey).delete())
+                promises.push(firebase.database().ref('ofertas').child(oferta.id).child('storageFileKeys').remove())
+                promises.push(firebase.database().ref('ofertas').child(oferta.id).child('imagens').remove())
+            }
+        } else {
+            console.log("STORAGE FILE KEYS NÃO CONFIGURADO")
+        }
+
+        return new Promise<any>(
+            (resolve, reject) => {
+                Promise.all(
+                    promises
+                )
+                    .then(
+                        () => {
+                            resolve()
                         }
                     )
-                    console.log('atualizando urls de imagem da oferta ' + oferta.id + ' para:', urls)
-                    firebase.database()
-                        .ref('/ofertas')
-                        .child(oferta.id)
-                        .child('imagens')
-                        .set(urls)
+                    .catch(
+                        () => {
+                            reject()
+                        }
+                    )
+            }
+        )
+    }
+
+    public atualizarImagensOferta(oferta: Oferta, imagens: File[]): Promise<any> {
+
+
+        return this.removerImagensOferta(oferta)
+            .then(
+                () => {
+                    this.publicarImagens(oferta, imagens)
+                        .then(
+                            (response: string[]) => {
+
+                                // resposta -> array com urls de download
+
+                                let urls = []
+                                response.forEach(
+                                    (url: string) => {
+                                        let urlObject = {
+                                            url: url
+                                        }
+                                        urls.push(urlObject)
+                                    }
+                                )
+
+                                firebase.database()
+                                    .ref('/ofertas')
+                                    .child(oferta.id)
+                                    .child('imagens')
+                                    .set(urls)
+                                    .then(
+                                        () => {
+                                            console.log('final da atualização')
+                                            console.log(oferta)
+                                        }
+                                    )
+
+                            }
+                        )
                 }
             )
+
     }
 
     public atualizarOferta(oferta: Oferta) {

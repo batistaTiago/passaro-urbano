@@ -9,7 +9,8 @@ export class Oferta {
         public destaque: boolean = false,
         public imagens: Array<object> = [],
         public id: string = '',
-        public storageKey: string = null) {
+        public storageKey: string = null,
+        public storageFileKeys: string[] = []) {
 
     }
 

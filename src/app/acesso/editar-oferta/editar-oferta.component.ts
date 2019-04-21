@@ -45,12 +45,6 @@ export class EditarOfertaComponent implements OnInit {
     )
   }
 
-  public test() {
-    console.log(this.oferta)
-    console.log(this.formEditarOferta)
-    //A maior de todas as descrições possíveis para uma oferta de festa. Só para testar se o layout está funcionando bem. Não perca, oferta válida por tempo limitado!
-  }
-
   public atualizarImagens(files: FileList) {
     this.imagens = Array.from(files)
   }
@@ -86,11 +80,13 @@ export class EditarOfertaComponent implements OnInit {
     }
 
 
+    // atualiza os campos de texto
     this.ofertasService.atualizarOferta(oferta)
       .then(
         () => {
           if (this.imagens != undefined && this.imagens != null) {
             if (this.imagens.length > 0) {
+              // atualiza as imagens
               this.ofertasService.atualizarImagensOferta(oferta, this.imagens)
             }
           }
@@ -99,4 +95,47 @@ export class EditarOfertaComponent implements OnInit {
     
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  public printarOferta() {
+    console.log(this.oferta)
+    //A maior de todas as descrições possíveis para uma oferta de festa. Só para testar se o layout está funcionando bem. Não perca, oferta válida por tempo limitado!
+  }
+
+  public removerImagens() {
+    this.ofertasService.removerImagensOferta(this.oferta)
+    .then(
+      () => {
+        console.log('sucesso')
+      }
+    )
+    .catch(
+      () => {
+        console.log('erro')
+      }
+    )
+  }
+
+
+
 }
