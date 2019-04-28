@@ -185,7 +185,7 @@ export class OfertasService {
 
         let key = oferta.storageKey
 
-        console.log(key)
+        // console.log(key)
 
         oferta.storageFileKeys = []
 
@@ -217,18 +217,18 @@ export class OfertasService {
                         let promises: Promise<string>[] = []
                         resp.forEach(
                             (r: any) => {
-                                console.log(r.name)
+                                // console.log(r.name)
                                 promises.push(firebase.storage().ref(r.ref['location'].path).getDownloadURL())
                             }
                         )
                         Promise.all(
                             promises
                         )
-                        .then(
-                            (urls: string[]) => {
-                                resolve(urls)
-                            }
-                        )
+                            .then(
+                                (urls: string[]) => {
+                                    resolve(urls)
+                                }
+                            )
                         // .catch(
                         //     (erro: Error) => {
                         //         reject(erro)
@@ -240,39 +240,42 @@ export class OfertasService {
         )
     }
 
-    public cadastrarOferta(oferta: Oferta, files: File[]) {
+    public cadastrarOferta(oferta: Oferta, files: File[]): Promise<any> {
 
-        this.publicarImagens(oferta, files)
-            .then(
-                (imageUrls: string[]) => {
-                    imageUrls.forEach(
-                        imageUrl => {
-                            console.log(imageUrl)
-                            let urlOject = {
-                                url: imageUrl
-                            }
-                            oferta.imagens.push(urlOject)
+        return new Promise<Oferta>(
+            (resolve, reject) => {
+                this.publicarImagens(oferta, files)
+                    .then(
+                        (imageUrls: string[]) => {
+                            imageUrls.forEach(
+                                imageUrl => {
+                                    // console.log(imageUrl)
+                                    let urlOject = {
+                                        url: imageUrl
+                                    }
+                                    oferta.imagens.push(urlOject)
+                                }
+                            )
+                            delete oferta.id
+
+                            firebase.database().ref(`ofertas/`).push(oferta).then(
+                                (response: any) => {
+                                    oferta.id = response.key
+                                    resolve(oferta)
+                                }
+                            )
                         }
                     )
-                    delete oferta.id
-
-                    firebase.database().ref(`ofertas/`).push(oferta).then(
-                        () => {
-                            console.log('concluido')
-                        }
-                    )
-                }
-            )
-            // .catch(
-            //     (erro: Error) => {
-            //         console.log(erro)
-            //     }
-            // )
+                // .catch(
+                //     (erro: Error) => {
+                //         console.log(erro)
+                //     }
+                // )
+            }
+        )
     }
 
     public removerImagensOferta(oferta: Oferta): Promise<any> {
-        console.log('inicio da atualização')
-        console.log(oferta)
 
         let promises: Promise<any>[] = []
 
@@ -334,12 +337,12 @@ export class OfertasService {
                                     .child(oferta.id)
                                     .child('imagens')
                                     .set(urls)
-                                    .then(
-                                        () => {
-                                            console.log('final da atualização')
-                                            console.log(oferta)
-                                        }
-                                    )
+                                // .then(
+                                //     () => {
+                                //         console.log('final da atualização')
+                                //         console.log(oferta)
+                                //     }
+                                // )
 
                             }
                         )

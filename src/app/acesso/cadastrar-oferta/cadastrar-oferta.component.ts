@@ -55,6 +55,11 @@ export class CadastrarOfertaComponent implements OnInit {
       )
 
       this.ofertasService.cadastrarOferta(oferta, this.imagens)
+      .then(
+        (novaOferta: Oferta) => {
+          console.log(novaOferta)
+        }
+      )
     }
   }
 
