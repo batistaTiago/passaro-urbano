@@ -48,6 +48,10 @@
     font-size: 1.85em
 }
 
+.bt-imagem-oferta {
+    max-height: 300px;
+}
+
 
 @media (min-width: 576px) {
     
@@ -65,6 +69,10 @@
 
     #carrossel-preco {
         font-size: 1.65em
+    }
+
+    .bt-imagem-oferta {
+        max-height: 280px;
     }
  }
 
@@ -89,6 +97,10 @@
     #carrossel-preco {
 
     }
+
+    .bt-imagem-oferta {
+        height: 200px;
+    }
  }
 
  @media (min-width: 992px) {
@@ -112,6 +124,10 @@
     #carrossel-preco {
         font-size: 1.85em
     }
+
+    .bt-imagem-oferta {
+        height: 170px;
+    }
  } 
  
  
@@ -126,6 +142,10 @@
 
     #carrossel-preco {
         font-size: 2.15em
+    }
+
+    .bt-imagem-oferta {
+        height: 150px;
     }
 
  }

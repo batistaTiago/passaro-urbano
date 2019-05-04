@@ -1,6 +1,5 @@
 <div class="container">
   
-  
   <form [formGroup]="formNovaOferta">
     
     <div class="form-group">
@@ -10,81 +9,69 @@
       formControlName="titulo" 
       class="form-control {{ formNovaOferta.get('titulo').pristine ? '' : (formNovaOferta.get('titulo').valid ? 'is-valid' : 'is-invalid') }}"
       >
-      <!-- <small *ngIf="formNovaOferta.get('titulo').valid && formNovaOferta.get('titulo').touched" class="form-text text-success">Válido</small>
-        <small *ngIf="formNovaOferta.get('titulo').invalid && formNovaOferta.get('titulo').touched" class="form-text text-danger">Inválido</small> -->
-      </div>
-      
-      <!-- <div class="form-group">
-        <input 
-        type="text" 
-        placeholder="Anunciante" 
-        formControlName="anunciante"
-        class="form-control {{ formNovaOferta.get('anunciante').pristine ? '' : (formNovaOferta.get('anunciante').valid ? 'is-valid' : 'is-invalid') }}"
-        >
-        <small>Válido</small>
-          <small>Inválido</small>
-        </div> -->
-        
-        <div class="form-group">
-          <input 
-          type="text" 
-          placeholder="Descrição" 
-          formControlName="descricao"
-          class="form-control {{ formNovaOferta.get('descricao').pristine ? '' : (formNovaOferta.get('descricao').valid ? 'is-valid' : 'is-invalid') }}"
-          >
-          <!-- <small>Válido</small>
-            <small>Inválido</small> -->
-          </div>
-          
-          <div class="form-group">
-            <input 
-            type="number" 
-            placeholder="Preço" 
-            formControlName="preco"
-            class="form-control {{ formNovaOferta.get('preco').pristine ? '' : (formNovaOferta.get('preco').valid ? 'is-valid' : 'is-invalid') }}"
-            >
-            <!-- <small>Válido</small>
-              <small>Inválido</small> -->
-            </div>  
-            
-            <div class="form-group">
-              <select 
-              formControlName="categoria"
-              class="form-control {{ formNovaOferta.get('categoria').pristine ? '' : (formNovaOferta.get('categoria').valid ? 'is-valid' : 'is-invalid') }}"
-              >
-              <option value="diversao">Diversão</option>
-              <option>Restaurantes</option>
-              <option>Festas</option>
-            </select>
-            <!-- <small>Válido</small>
-              <small>Inválido</small> -->
-            </div>
-            
-            <div class="form-group">
-              <div class="custom-file">
-                <label 
-                  class="custom-file-label"
-                  for="inputImagens">Selecione as imagens</label>
-                <input 
-                type="file" 
-                multiple accept="image/*" 
-                #inputImagens 
-                id="inputImagens"
-                (change)="atualizarImagens(inputImagens.files)"
-                class="custom-file-input {{ imagensValidas() ? 'is-valid' : 'is-invalid' }}"
-                >
-              </div>
-            </div>
-          </form>
+    </div>
+    
+    <div class="form-group">
+      <input 
+      type="text" 
+      placeholder="Descrição" 
+      formControlName="descricao"
+      class="form-control {{ formNovaOferta.get('descricao').pristine ? '' : (formNovaOferta.get('descricao').valid ? 'is-valid' : 'is-invalid') }}"
+      >
+    </div>
+    
+    <div class="form-group">
+      <input 
+      type="number" 
+      placeholder="Preço" 
+      formControlName="preco"
+      class="form-control {{ formNovaOferta.get('preco').pristine ? '' : (formNovaOferta.get('preco').valid ? 'is-valid' : 'is-invalid') }}"
+      >
+    </div>  
+    
+    <div class="form-group">
+      <select 
+      formControlName="categoria"
+      class="form-control {{ formNovaOferta.get('categoria').pristine ? '' : (formNovaOferta.get('categoria').valid ? 'is-valid' : 'is-invalid') }}"
+      >
+      <option value="diversao">Diversão</option>
+      <option>Restaurantes</option>
+      <option>Festas</option>
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <div class="custom-file">
+      <label 
+      class="custom-file-label"
+      for="inputImagens">Selecione as imagens</label>
+      <input 
+      type="file" 
+      multiple accept="image/*" 
+      #inputImagens 
+      id="inputImagens"
+      (change)="atualizarImagens(inputImagens.files)"
+      class="custom-file-input {{ imagensValidas() ? 'is-valid' : 'is-invalid' }}"
+      >
+    </div>
+  </div>
 
-          <div class="d-flex justify-content-center">
-              <button 
-                type="submit" 
-                class="btn btn-outline-success btn-lg" 
-                #cadastrarOfertaButton 
-                (click)="cadastrarOfertaButtonClick(cadastrarOfertaButton)"
-                [disabled]="!(formNovaOferta.valid && imagensValidas())">Cadastrar</button>
-          </div>
-          
-          
-        </div>
+  <div id="images">
+
+  </div>
+  
+</form>
+
+<div class="d-flex justify-content-center">
+  <button 
+  type="submit" 
+  class="btn btn-outline-success btn-lg" 
+  #cadastrarOfertaButton 
+  (click)="cadastrarOfertaButtonClick(cadastrarOfertaButton)"
+  [disabled]="!(formNovaOferta.valid && imagensValidas())">Cadastrar</button>
+</div>
+
+
+</div>
+
+<button (click)="test()">test</button>

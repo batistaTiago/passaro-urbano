@@ -1,100 +1,98 @@
 <div class="container">
-
+  
   <div *ngIf="oferta">
-
-      <form [formGroup]="formEditarOferta">
+    
+    <form [formGroup]="formEditarOferta">
       
+      <div class="form-group">
+        <input 
+        type="text" 
+        placeholder="Título" 
+        formControlName="titulo"
+        [value]="oferta.titulo"
+        class="form-control {{ formEditarOferta.get('titulo').pristine ? '' : (formEditarOferta.get('titulo').valid ? 'is-valid' : 'is-invalid') }}"
+        >
+        <!-- <small *ngIf="formEditarOferta.get('titulo').valid && formEditarOferta.get('titulo').touched" class="form-text text-success">Válido</small>
+          <small *ngIf="formEditarOferta.get('titulo').invalid && formEditarOferta.get('titulo').touched" class="form-text text-danger">Inválido</small> -->
+        </div>
+        
+        <div class="form-group">
+          <input 
+          type="text" 
+          placeholder="Descrição" 
+          formControlName="descricao"
+          [value]="oferta.descricao"
+          class="form-control {{ formEditarOferta.get('descricao').pristine ? '' : (formEditarOferta.get('descricao').valid ? 'is-valid' : 'is-invalid') }}"
+          >
+          <!-- <small>Válido</small>
+            <small>Inválido</small> -->
+          </div>
+          
           <div class="form-group">
             <input 
-            type="text" 
-            placeholder="Título" 
-            formControlName="titulo"
-            [value]="oferta.titulo"
-            class="form-control {{ formEditarOferta.get('titulo').pristine ? '' : (formEditarOferta.get('titulo').valid ? 'is-valid' : 'is-invalid') }}"
+            type="number" 
+            placeholder="Preço" 
+            formControlName="preco"
+            [value]="oferta.preco"
+            class="form-control {{ formEditarOferta.get('preco').pristine ? '' : (formEditarOferta.get('preco').valid ? 'is-valid' : 'is-invalid') }}"
             >
-            <!-- <small *ngIf="formEditarOferta.get('titulo').valid && formEditarOferta.get('titulo').touched" class="form-text text-success">Válido</small>
-              <small *ngIf="formEditarOferta.get('titulo').invalid && formEditarOferta.get('titulo').touched" class="form-text text-danger">Inválido</small> -->
+            <!-- <small>Válido</small>
+              <small>Inválido</small> -->
+            </div>  
+            
+            <div class="form-group">
+              <select 
+              [value]="oferta.categoria"
+              formControlName="categoria"
+              class="form-control {{ formEditarOferta.get('categoria').pristine ? '' : (formEditarOferta.get('categoria').valid ? 'is-valid' : 'is-invalid') }}"
+              >
+              <option value="diversao">Diversão</option>
+              <option>Restaurantes</option>
+              <option>Festas</option>
+            </select>
+            <!-- <small>Válido</small>
+              <small>Inválido</small> -->
             </div>
-              
-              <div class="form-group">
+            
+            <div class="form-group">
+              <div class="custom-file">
+                <label 
+                class="custom-file-label"
+                for="inputImagens">Selecione as imagens</label>
                 <input 
-                type="text" 
-                placeholder="Descrição" 
-                formControlName="descricao"
-                [value]="oferta.descricao"
-                class="form-control {{ formEditarOferta.get('descricao').pristine ? '' : (formEditarOferta.get('descricao').valid ? 'is-valid' : 'is-invalid') }}"
-                >
-                <!-- <small>Válido</small>
-                  <small>Inválido</small> -->
-                </div>
-                
-                <div class="form-group">
-                  <input 
-                  type="number" 
-                  placeholder="Preço" 
-                  formControlName="preco"
-                  [value]="oferta.preco"
-                  class="form-control {{ formEditarOferta.get('preco').pristine ? '' : (formEditarOferta.get('preco').valid ? 'is-valid' : 'is-invalid') }}"
-                  >
-                  <!-- <small>Válido</small>
-                    <small>Inválido</small> -->
-                  </div>  
-                  
-                  <div class="form-group">
-                    <select 
-                    [value]="oferta.categoria"
-                    formControlName="categoria"
-                    class="form-control {{ formEditarOferta.get('categoria').pristine ? '' : (formEditarOferta.get('categoria').valid ? 'is-valid' : 'is-invalid') }}"
-                    >
-                    <option value="diversao">Diversão</option>
-                    <option>Restaurantes</option>
-                    <option>Festas</option>
-                  </select>
-                  <!-- <small>Válido</small>
-                    <small>Inválido</small> -->
-                  </div>
-                  
-                  <div class="form-group">
-                    <div class="custom-file">
-                      <label 
-                        class="custom-file-label"
-                        for="inputImagens">Selecione as imagens</label>
-                      <input 
-                      type="file" 
-                      multiple accept="image/*" 
-                      #inputImagens 
-                      id="inputImagens"
-                      (change)="atualizarImagens(inputImagens.files)"
-                      class="custom-file-input" 
-                      > <!-- {{ imagensValidas() ? 'is-valid' : 'is-invalid' }} -->
-                    </div>
-                  </div>
-
-                  <div class="row">
-                      <div class="col-4" *ngFor="let imagem of oferta.imagens">
-                        <img [src]="imagem.url" class="img-fluid">
-                      </div>
-                    </div>
-
-                </form>
-      
-                <div class="d-flex justify-content-center">
-                    <button 
-                      type="submit" 
-                      class="btn btn-outline-success btn-lg" 
-                      #editarOfertaButton
-                      (click)="editarOfertaButtonClick(editarOfertaButton)">Salvar Alterações</button>
-
-                      <!-- [disabled]="!(formEditarOferta.valid && imagensValidas())" -->
-
-                </div>
-
-                <button (click)="printarOferta()">printar oferta</button>
-                <button (click)="removerImagens()">deletar imagens</button>
-
-  </div>
-
-
-
-
-</div>
+                type="file" 
+                multiple accept="image/*" 
+                #inputImagens 
+                id="inputImagens"
+                (change)="atualizarImagens(inputImagens.files)"
+                class="custom-file-input" 
+                > <!-- {{ imagensValidas() ? 'is-valid' : 'is-invalid' }} -->
+              </div>
+            </div>
+            
+            <div id="images">
+              <img *ngFor="let imagem of oferta.imagens" [src]="imagem.url" class="mb-3 col-md-4 img-fluid">
+            </div>
+            
+          </form>
+          
+          <div class="d-flex justify-content-center">
+            <button 
+            type="submit" 
+            class="btn btn-outline-success btn-lg" 
+            #editarOfertaButton
+            (click)="editarOfertaButtonClick(editarOfertaButton)">Salvar Alterações</button>
+            
+            <!-- [disabled]="!(formEditarOferta.valid && imagensValidas())" -->
+            
+          </div>
+          
+          <button (click)="printarOferta()">printar oferta</button>
+          <button (click)="removerImagens()">deletar imagens</button>
+          
+        </div>
+        
+        
+        
+        
+      </div>

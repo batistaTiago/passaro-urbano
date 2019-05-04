@@ -1,18 +1,12 @@
 import { Oferta } from '../shared/oferta.model'
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { API_URL } from '../app.constants';
-import { Observable } from 'rxjs'
 
-import { map, retry } from 'rxjs/operators'
-
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
 
 @Injectable()
 export class OfertasService {
 
-    constructor(
-        private http: HttpClient) { }
+    constructor() { }
 
     private ofertas: Array<Oferta> = []
 
@@ -159,20 +153,32 @@ export class OfertasService {
     //         )
     // }
 
-    public pesquisarOfertas(query: string): Observable<Oferta[]> {
+    public pesquisarOfertas(query: string): Promise<Oferta[]> {
 
-        // http://localhost:3000/ofertas?descricao_oferta_like=pizza
+        return new Promise<Oferta[]>(
+            (resolve, reject) => {
+                firebase.database()
+                    .ref('/ofertas')
+                    .orderByKey()
+                    .on('value',
+                        (snapshot: any) => {
+                            let ofertas: Oferta[] = []
+                            snapshot.forEach(
+                                childSnapshot => {
+                                    if (childSnapshot.val().descricao.includes(query)) {
+                                        let oferta = childSnapshot.val()
+                                        oferta.id = childSnapshot.key
+                                        ofertas.push(oferta)
+                                    }
+                                }
+                            )
 
-        let response = this.http.get(`${API_URL}/ofertas?descricao_oferta_like=${query}`)
-        return response.pipe(
-            map(
-                (resposta: Oferta[]) => {
-                    return resposta
-                }
-            ),
-            retry(10)
+                            // console.log(ofertas)
+                            resolve(ofertas)
+                        }
+                    )
+            }
         )
-
     }
 
     private uploadImagesToFirebase(oferta: Oferta, files: Array<File>): Promise<any>[] {
@@ -241,7 +247,6 @@ export class OfertasService {
     }
 
     public cadastrarOferta(oferta: Oferta, files: File[]): Promise<any> {
-
         return new Promise<Oferta>(
             (resolve, reject) => {
                 this.publicarImagens(oferta, files)
@@ -261,7 +266,16 @@ export class OfertasService {
                             firebase.database().ref(`ofertas/`).push(oferta).then(
                                 (response: any) => {
                                     oferta.id = response.key
-                                    resolve(oferta)
+                                    firebase.database()
+                                        .ref('/usuarios')
+                                        .child(oferta.anunciante[1])
+                                        .child('/ofertas')
+                                        .push(oferta.id)
+                                        .then(
+                                            () => {
+                                                resolve(oferta)
+                                            }
+                                        )
                                 }
                             )
                         }

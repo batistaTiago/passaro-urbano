@@ -46,7 +46,42 @@ export class EditarOfertaComponent implements OnInit {
   }
 
   public atualizarImagens(files: FileList) {
-    this.imagens = Array.from(files)
+    let images = Array.from(files)
+
+    if (images.length > 0) {
+
+      this.imagens = []
+      $('form #images').html('')
+
+      images.forEach(
+        (image: File) => {
+          let reader = new FileReader()
+          let img = new Image()
+
+          img.onload = () => {
+            let ratio = img.width / img.height
+
+            if (ratio >= 1.5 && ratio <= 1.8) {
+              img.className = 'img-fluid col-md-4 mb-3'
+              $('form #images').append(img)
+              this.imagens.push(image)
+            }
+            else {
+              alert('O arquivo ' + image.name + ' não tem dimensões compatíveis (aspect ratio entre 1.5 e 1.8) e está sendo ignorado')
+            }
+
+          }
+
+          reader.onload = (event: any) => {
+            img.src = event.target.result
+          }
+
+          reader.readAsDataURL(image)
+
+        }
+      )
+    }
+
   }
 
   public editarOfertaButtonClick(sender: HTMLElement) {
