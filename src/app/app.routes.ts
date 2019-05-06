@@ -5,7 +5,7 @@ import { HomeComponent } from "./main/home/home.component";
 import { ProfileComponent } from "./acesso/profile/profile.component";
 import { LoginComponent } from "./acesso/login/login.component";
 import { CadastroComponent } from "./acesso/cadastro/cadastro.component";
-import { CadastrarOfertaComponent } from "./acesso/cadastrar-oferta/cadastrar-oferta.component"
+import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.component';
 
 import { OfertaComponent } from './main/oferta/oferta.component';
 import { ComoUsarComponent } from './main/oferta/como-usar/como-usar.component';
@@ -15,7 +15,7 @@ import { CategoriasComponent } from './main/categorias/categorias.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
 import { VendorAuthGuard } from './services/auth-guard-vendor.service';
-import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.component';
+
 
 
 export const ROUTES: Routes = [
@@ -53,7 +53,7 @@ export const ROUTES: Routes = [
   },
   {
     path: 'cadastrar-oferta',
-    component: CadastrarOfertaComponent,
+    component: EditarOfertaComponent,
     canActivate: [ VendorAuthGuard ]
   },
   {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 import { Oferta } from '../../shared/oferta.model';
 import { Authenticator } from '../../services/auth.service'
 import { OfertasService } from '../../services/ofertas.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-cadastrar-oferta',
@@ -81,22 +81,6 @@ export class CadastrarOfertaComponent implements OnInit {
   public cadastrarOfertaButtonClick(sender: HTMLElement) {
     sender.blur()
 
-    if (this.formNovaOferta.valid && this.imagensValidas()) {
-      let oferta = new Oferta(
-        this.formNovaOferta.value.categoria,
-        this.formNovaOferta.value.titulo,
-        this.formNovaOferta.value.descricao,
-        [this.authenticator.getUserInfo()[1].nome, btoa(this.authenticator.getUserInfo()[1].email)],
-        this.formNovaOferta.value.preco
-      )
-
-      this.ofertasService.cadastrarOferta(oferta, this.imagens)
-        .then(
-          (novaOferta: Oferta) => {
-            console.log(novaOferta)
-          }
-        )
-    }
   }
 
 

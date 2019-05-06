@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Authenticator } from '../../services/auth.service';
 
@@ -8,13 +8,18 @@ import { Authenticator } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements AfterViewInit, OnDestroy {
 
   private authToken: string = ''
 
   constructor(private authenticator: Authenticator) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    $('footer').addClass('fixed-bottom')
+  }
+
+  ngOnDestroy() {
+    $('footer').removeClass('fixed-bottom')
   }
 
   public displayInvalidFeedback: boolean = false

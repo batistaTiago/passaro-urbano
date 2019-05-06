@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Authenticator } from '../../services/auth.service';
 import { Usuario } from '../../shared/usuario.model';
@@ -8,11 +8,16 @@ import { Usuario } from '../../shared/usuario.model';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.css']
 })
-export class CadastroComponent implements OnInit {
+export class CadastroComponent implements AfterViewInit, OnDestroy {
 
   constructor(private authenticator: Authenticator) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    $('footer').addClass('fixed-bottom')
+  }
+
+  ngOnDestroy() {
+    $('footer').removeClass('fixed-bottom')
   }
 
   public formCadastro: FormGroup = new FormGroup(

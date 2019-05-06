@@ -18,15 +18,21 @@
     src: url("/assets/fontes/Quesha.woff")
 }
 
-#bt-global-bg {
-    position: absolute;
-    width: 100%;
-    background: -moz-radial-gradient(circle, #7db9e8, #0057A6);
-    background: -webkit-radial-gradient(circle, #7db9e8, #0057A6);
-    background: -o-radial-gradient(circle, #7db9e8, #0057A6);
-    background: -ms-radial-gradient(circle, #7db9e8, #0057A6);
-    background: radial-gradient(circle, #7db9e8, #0057A6);
+html, body {
+    height: 100%;
+    background: -moz-radial-gradient(circle, #3487c7, rgb(0, 28, 54));
+    background: -webkit-radial-gradient(circle, #3487c7, rgb(0, 28, 54));
+    background: -o-radial-gradient(circle, #3487c7, rgb(0, 28, 54));
+    background: -ms-radial-gradient(circle, #3487c7, rgb(0, 28, 54));
+    background: radial-gradient(circle, #3487c7, rgb(0, 28, 54));
     background-attachment: fixed;
+}
+
+.bt-absolutely-centered {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .bt-bg-transparent {
@@ -113,14 +119,6 @@
     overflow-y: hidden;
 }
 
-.bt-bg-transparent {
-    -webkit-background: transparent;
-    -o-background: transparent;
-    -ms-background: transparent;
-    -moz-background: transparent;
-    background: transparent;
-}
-
 .bt-scalable-text {
     font-size: 0.9em;
 }
@@ -190,4 +188,8 @@ input#cep-input[type="number"] {
 
 .bt-highlighted-text-white {
     text-shadow: 2px 2px white
+}
+
+.bt-bottom-separator {
+    border-bottom: 1px solid #ccc;
 }

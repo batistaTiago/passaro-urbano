@@ -1,6 +1,8 @@
 <div class="container">
   
-  <div *ngIf="oferta">
+  <div *ngIf="oferta" id="content">
+
+    <h1 class="text-center text-light my-3">Nova Oferta</h1>
     
     <form [formGroup]="formEditarOferta">
       
@@ -81,14 +83,15 @@
             type="submit" 
             class="btn btn-outline-success btn-lg" 
             #editarOfertaButton
-            (click)="editarOfertaButtonClick(editarOfertaButton)">Salvar Alterações</button>
+            id="submitButton"
+            (click)="editarOfertaButtonClick(editarOfertaButton)">Cadastrar</button>
             
             <!-- [disabled]="!(formEditarOferta.valid && imagensValidas())" -->
             
           </div>
           
-          <button (click)="printarOferta()">printar oferta</button>
-          <button (click)="removerImagens()">deletar imagens</button>
+          <!-- <button (click)="printarOferta()">printar oferta</button>
+          <button (click)="removerImagens()">deletar imagens</button> -->
           
         </div>
         

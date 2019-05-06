@@ -21,7 +21,6 @@ import { CarrinhoService } from './services/carrinho.service';
 import { AcessoComponent } from './acesso/acesso.component';
 import { CadastroComponent } from './acesso/cadastro/cadastro.component';
 import { LoginComponent } from './acesso/login/login.component';
-import { CadastrarOfertaComponent } from './acesso/cadastrar-oferta/cadastrar-oferta.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { Authenticator } from './services/auth.service';
 import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
@@ -45,7 +44,6 @@ import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.comp
     AcessoComponent,
     CadastroComponent,
     LoginComponent,
-    CadastrarOfertaComponent,
     ProfileComponent,
     EditarOfertaComponent
   ],

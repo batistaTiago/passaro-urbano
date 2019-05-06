@@ -5,7 +5,7 @@ export class Oferta {
         public titulo: string = '',
         public descricao: string = '',
         public anunciante: [string, string] = ['', ''],
-        public preco: number = -1,
+        public preco: number = null,
         public destaque: boolean = false,
         public imagens: Array<object> = [],
         public id: string = '',

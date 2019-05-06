@@ -1,0 +1,53 @@
+.oferta-imagem {
+    max-height: 220px;
+    /* border-radius: 5px; */
+}
+
+.oferta-titulo {
+    font-size: 1.8em;
+}
+
+.oferta-preco {
+    font-size: 1.5em;
+}
+
+@media (min-width: 576px) {
+    .oferta-titulo {
+        font-size: 2em;
+    }   
+
+    .oferta-imagem {
+        max-height: 270px;
+    }
+
+} 
+
+@media (min-width: 768px) {
+    .oferta-titulo {
+        font-size: 2em;
+    }
+
+    .oferta-imagem {
+        max-height: 320px;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .oferta-titulo {
+        font-size: 1.65em;
+    }
+
+    .oferta-imagem {
+        max-height: 370px;
+    }
+
+}
+
+.bt-bg-transparent {
+    -webkit-background: transparent;
+    -o-background: transparent;
+    -ms-background: transparent;
+    -moz-background: transparent;
+    background: transparent;
+}

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-
 import { OfertasService } from '../../services/ofertas.service';
 import { Oferta } from '../../shared/oferta.model';
+import { Authenticator } from '../../services/auth.service';
 
-import * as firebase from 'firebase'
+import * as $ from 'jquery'
 
 @Component({
   selector: 'app-editar-oferta',
@@ -14,7 +14,7 @@ import * as firebase from 'firebase'
   styleUrls: ['./editar-oferta.component.css'],
   providers: [OfertasService]
 })
-export class EditarOfertaComponent implements OnInit {
+export class EditarOfertaComponent implements AfterViewInit {
 
   public formEditarOferta: FormGroup = new FormGroup(
     {
@@ -25,24 +25,42 @@ export class EditarOfertaComponent implements OnInit {
     }
   )
 
-  public oferta: Oferta = null
+  public oferta: Oferta = new Oferta()
+
+  public isEdit: boolean
 
   private imagens: Array<File>
 
   constructor(
     private ofertasService: OfertasService,
+    private authenticator: Authenticator,
     private route: ActivatedRoute) { }
 
-  ngOnInit() {
+
+  ngAfterViewInit() {
     this.route.params.subscribe(
       (p: Params) => {
-        this.ofertasService.getOfertaById(p.id).then(
-          (oferta: Oferta) => {
-            this.oferta = oferta
-          }
-        )
+        this.isEdit = (p.id != undefined && p.id != null)
+        document.getElementById('content').hidden = this.isEdit
+        if (this.isEdit) {
+          this.ofertasService.getOfertaById(p.id).then(
+            (oferta: Oferta) => {
+              this.oferta = oferta
+              $('#submitButton').html('Salvar Alterações')
+              $('h1').html('Editar Oferta')
+              document.getElementById('content').hidden = false
+            }
+          )
+        }
       }
     )
+  }
+
+  public imagensValidas(): boolean {
+    if (this.imagens) {
+      return this.imagens.length > 0
+    }
+    return false
   }
 
   public atualizarImagens(files: FileList) {
@@ -86,49 +104,68 @@ export class EditarOfertaComponent implements OnInit {
 
   public editarOfertaButtonClick(sender: HTMLElement) {
     sender.blur()
+    if (this.isEdit === true) {
 
-    let oferta = this.oferta
+      let oferta = this.oferta
 
-    oferta.titulo = this.formEditarOferta.get('titulo').pristine ? oferta.titulo : this.formEditarOferta.value.titulo
-    oferta.descricao = this.formEditarOferta.get('descricao').pristine ? oferta.descricao : this.formEditarOferta.value.descricao
-    oferta.categoria = this.formEditarOferta.get('categoria').pristine ? oferta.categoria : this.formEditarOferta.value.categoria
-    oferta.preco = this.formEditarOferta.get('preco').pristine ? oferta.preco : this.formEditarOferta.value.preco
+      oferta.titulo = this.formEditarOferta.get('titulo').pristine ? oferta.titulo : this.formEditarOferta.value.titulo
+      oferta.descricao = this.formEditarOferta.get('descricao').pristine ? oferta.descricao : this.formEditarOferta.value.descricao
+      oferta.categoria = this.formEditarOferta.get('categoria').pristine ? oferta.categoria : this.formEditarOferta.value.categoria
+      oferta.preco = this.formEditarOferta.get('preco').pristine ? oferta.preco : this.formEditarOferta.value.preco
 
-    if (oferta.titulo == null || oferta.titulo == undefined) {
-      console.log('erro de titulo')
-      return
-    }
+      if (oferta.titulo == null || oferta.titulo == undefined) {
+        console.log('erro de titulo')
+        return
+      }
 
-    if (oferta.descricao == null || oferta.descricao == undefined) {
-      console.log('erro de descricao')
-      return
-    }
+      if (oferta.descricao == null || oferta.descricao == undefined) {
+        console.log('erro de descricao')
+        return
+      }
 
-    if (oferta.categoria == null || oferta.categoria == undefined) {
-      console.log('erro de categoria')
-      return
-    }
+      if (oferta.categoria == null || oferta.categoria == undefined) {
+        console.log('erro de categoria')
+        return
+      }
 
-    if (oferta.preco == null || oferta.preco == undefined) {
-      console.log('erro de preco')
-      return
-    }
+      if (oferta.preco == null || oferta.preco == undefined) {
+        console.log('erro de preco')
+        return
+      }
 
 
-    // atualiza os campos de texto
-    this.ofertasService.atualizarOferta(oferta)
-      .then(
-        () => {
-          if (this.imagens != undefined && this.imagens != null) {
-            if (this.imagens.length > 0) {
-              // atualiza as imagens
-              this.ofertasService.atualizarImagensOferta(oferta, this.imagens)
+      // atualiza os campos de texto
+      this.ofertasService.atualizarOferta(oferta)
+        .then(
+          () => {
+            if (this.imagens != undefined && this.imagens != null) {
+              if (this.imagens.length > 0) {
+                // atualiza as imagens
+                this.ofertasService.atualizarImagensOferta(oferta, this.imagens)
+              }
             }
           }
-        }
-      )
-    
+        )
+    } else if (this.isEdit === false) {
+      if (this.formEditarOferta.valid && this.imagensValidas()) {
+        let oferta = new Oferta(
+          this.formEditarOferta.value.categoria,
+          this.formEditarOferta.value.titulo,
+          this.formEditarOferta.value.descricao,
+          [this.authenticator.getUserInfo()[1].nome, btoa(this.authenticator.getUserInfo()[1].email)],
+          this.formEditarOferta.value.preco
+        )
 
+        this.ofertasService.cadastrarOferta(oferta, this.imagens)
+          .then(
+            (novaOferta: Oferta) => {
+              console.log(novaOferta)
+            }
+          )
+      }
+    } else {
+      console.log("################## ERRO ##################")
+    }
   }
 
 
@@ -159,16 +196,16 @@ export class EditarOfertaComponent implements OnInit {
 
   public removerImagens() {
     this.ofertasService.removerImagensOferta(this.oferta)
-    .then(
-      () => {
-        console.log('sucesso')
-      }
-    )
-    .catch(
-      () => {
-        console.log('erro')
-      }
-    )
+      .then(
+        () => {
+          console.log('sucesso')
+        }
+      )
+      .catch(
+        () => {
+          console.log('erro')
+        }
+      )
   }
 
 
