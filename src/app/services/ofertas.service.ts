@@ -264,16 +264,32 @@ export class OfertasService {
                             delete oferta.id
 
                             firebase.database().ref(`ofertas/`).push(oferta).then(
-                                (response: any) => {
+                                (response) => {
                                     oferta.id = response.key
                                     firebase.database()
                                         .ref('/usuarios')
                                         .child(oferta.anunciante[1])
                                         .child('/ofertas')
-                                        .push(oferta.id)
+                                        .once('value')
                                         .then(
-                                            () => {
-                                                resolve(oferta)
+                                            (ofertas) => {
+                                                let result: string[] = []
+                                                for (let attribute in ofertas.val()) {
+                                                    result.push(ofertas.val()[attribute])
+                                                }
+                                                result.push(oferta.id)
+
+                                                firebase.database()
+                                                    .ref('/usuarios')
+                                                    .child(oferta.anunciante[1])
+                                                    .child('/ofertas')
+                                                    .set(result)
+                                                    .then(
+                                                        () => {
+                                                            resolve(oferta)
+                                                        }
+                                                    )
+
                                             }
                                         )
                                 }
@@ -325,7 +341,6 @@ export class OfertasService {
     }
 
     public atualizarImagensOferta(oferta: Oferta, imagens: File[]): Promise<any> {
-
 
         return this.removerImagensOferta(oferta)
             .then(
@@ -380,5 +395,58 @@ export class OfertasService {
                     console.log('erro', erro)
                 }
             )
+    }
+
+    private removerOfertaDaListaDeOfertas(oferta: Oferta): Promise<any> {
+        return firebase.database()
+            .ref('/ofertas')
+            .child(oferta.id)
+            .remove().then(
+                () => {
+                    firebase.database()
+                        .ref('/ofertas')
+                        .child(oferta.id)
+                        .remove()
+                }
+            )
+    }
+
+    private removerOfertaDoPerfilDoUsuario(oferta: Oferta): Promise<any> {
+        return firebase.database()
+            .ref('/usuarios')
+            .child(oferta.anunciante[1])
+            .child('/ofertas')
+            .once('value')
+            .then(
+                (snapshot) => {
+                    snapshot.forEach(
+                        (childSnapshot) => {
+                            if (childSnapshot.val() === oferta.id) {
+                                firebase.database()
+                                    .ref('/usuarios')
+                                    .child(oferta.anunciante[1])
+                                    .child('/ofertas')
+                                    .child(childSnapshot.key)
+                                    .remove()
+                            }
+                        }
+                    )
+                }
+            )
+    }
+
+    public removerOferta(oferta: Oferta) {
+        console.log('removendo imagens')
+        this.removerImagensOferta(oferta).then(
+            () => {
+                console.log('removendo da lista de ofertas do usuario')
+                this.removerOfertaDoPerfilDoUsuario(oferta).then(
+                    () => {
+                        console.log('removendo da lista de ofertas')
+                        this.removerOfertaDaListaDeOfertas(oferta)
+                    }
+                )
+            }
+        )
     }
 }

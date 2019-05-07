@@ -54,4 +54,12 @@ export class ProfileComponent implements OnInit {
     console.log(oferta)
   }
 
+  public apagarOfertaButtonClick(oferta: Oferta) {
+    (<HTMLElement>event.target).blur()
+    if (confirm('Realmente deseja apagar a oferta ' + oferta.titulo + '? Esta ação NÃO PODE SER DESFEITA.')) {
+      console.log(oferta.id)
+      this.ofertaService.removerOferta(oferta)
+    }
+  }
+
 }
