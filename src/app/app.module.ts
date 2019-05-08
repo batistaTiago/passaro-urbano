@@ -27,6 +27,9 @@ import { UnloggedAuthGuard } from './services/auth-guard-unlogged.service';
 import { ProfileComponent } from './acesso/profile/profile.component';
 import { VendorAuthGuard } from './services/auth-guard-vendor.service';
 import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.component';
+import { LoadingOfertasComponent } from './loading-ofertas/loading-ofertas.component';
+import { OrdemCompraService } from './services/ordem-compra.service';
+import { VendaPendenteComponent } from './acesso/profile/venda-pendente/venda-pendente.component';
 
 
 @NgModule({
@@ -45,7 +48,9 @@ import { EditarOfertaComponent } from './acesso/editar-oferta/editar-oferta.comp
     CadastroComponent,
     LoginComponent,
     ProfileComponent,
-    EditarOfertaComponent
+    EditarOfertaComponent,
+    LoadingOfertasComponent,
+    VendaPendenteComponent
   ],
   imports: [
     BrowserModule,

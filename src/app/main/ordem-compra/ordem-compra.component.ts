@@ -10,6 +10,7 @@ import { CepService } from '../../services/cep.service';
 
 import { Observable, Subject, of } from 'rxjs'
 import { switchMap, debounceTime, distinctUntilChanged, catchError } from 'rxjs/operators'
+import { Authenticator } from '../../services/auth.service';
 
 
 
@@ -55,7 +56,8 @@ export class OrdemCompraComponent implements OnInit {
   constructor(
     private cepService: CepService, 
     private ordemCompraService: OrdemCompraService,
-    public carrinhoService: CarrinhoService) { 
+    public carrinhoService: CarrinhoService,
+    private authenticator: Authenticator) { 
 
     }
 
@@ -173,10 +175,14 @@ export class OrdemCompraComponent implements OnInit {
   public confirmarCompra() {
     if (this.carrinhoService.getItems().length) {
       let endereco = this.getEndereco()
+      let userInfo = this.authenticator.getUserInfo()[1]
+      delete userInfo.isVendor
       let pedido = new Pedido(
         endereco, 
         this.formaPagamento,
-        this.carrinhoService.getItems()
+        this.carrinhoService.getItems(),
+        userInfo,
+        this.carrinhoService.getValorTotal()
       )
       this.ordemCompraService
         .efetivarCompra(pedido)
@@ -185,7 +191,7 @@ export class OrdemCompraComponent implements OnInit {
 
             this.idPedidoCompra = idNovoPedido
 
-            this.carrinhoService.limparItens()
+            // this.carrinhoService.limparItens()
           }
         )
     } else {

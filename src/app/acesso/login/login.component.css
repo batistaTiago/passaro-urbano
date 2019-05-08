@@ -1,0 +1,9 @@
+#h1-login {
+    display: none;
+}
+
+@media (min-height: 650px) {
+    #h1-login {
+        display: block;
+    }
+} 

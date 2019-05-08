@@ -28,13 +28,6 @@ html, body {
     background-attachment: fixed;
 }
 
-.bt-absolutely-centered {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .bt-bg-transparent {
     background-color: transparent;
 }
@@ -136,15 +129,26 @@ input#cep-input[type="number"] {
     max-height: 200px;
 }
 
+.bt-absolutely-centered {
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+}
+
 @media (min-width: 576px) {
     
-    .bt-scalable-text {
-        font-size: 1.1em
-    }
 } 
 
 @media (min-width: 768px) {
     
+    .bt-absolutely-centered {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     .menu .nav-item a {
         font-size: 1.15em
     }

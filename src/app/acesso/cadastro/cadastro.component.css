@@ -1,0 +1,9 @@
+#h1-cadastro {
+    display: none;
+}
+
+@media (min-height: 576px) {
+    #h1-cadastro {
+        display: block;
+    }
+} 

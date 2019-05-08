@@ -1,6 +1,6 @@
 import { ItemCarrinho } from "../shared/item-carrinho.model";
 import { Oferta } from "../shared/oferta.model";
-import { Authenticator } from "../services/auth.service";
+import { Authenticator } from "./auth.service";
 
 import { Injectable } from '@angular/core'
 

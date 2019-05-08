@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Oferta } from '../../shared/oferta.model';
 import { OfertasService } from '../../services/ofertas.service';
 import { Router } from '@angular/router';
@@ -9,33 +9,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./categorias.component.css'],
   providers: [OfertasService]
 })
-export class CategoriasComponent implements AfterViewInit, OnDestroy {
-  
+export class CategoriasComponent implements AfterViewInit {
+
   public ofertas: Oferta[] = null
-  
+
   public mainHeader: string = ''
   public subHeader: string = ''
-  
+
   constructor(private ofertaService: OfertasService, private router: Router) { }
-  
+
   ngAfterViewInit() {
-    
+
     let categoria = this.router.url.replace('/', '')
-    $('footer').addClass('fixed-bottom')
-    
+
     this.ofertaService.getPageHeaders(categoria)
-    .then((headers: any) => {
+      .then((headers: any) => {
         this.mainHeader = headers['main']
         this.subHeader = headers['sub']
       })
-      
+
     this.ofertaService.getOfertasPorCategoria(categoria)
       .then((ofertas: Oferta[]) => {
         this.ofertas = ofertas
-        if (this.ofertas.length != 0) {
-          $('footer').removeClass('fixed-bottom')
-        } else {
+        if (this.ofertas.length == 0) {
           $('.secao').hide()
+          $('footer').addClass('fixed-bottom')
+        } else {
+          $('.secao').show()
+          $('footer').removeClass('fixed-bottom')
         }
       })
       .catch(() => {
@@ -43,9 +44,4 @@ export class CategoriasComponent implements AfterViewInit, OnDestroy {
       })
   }
 
-  ngOnDestroy() {
-    $('footer').removeClass('fixed-bottom')
-  }
-    
 }
-  

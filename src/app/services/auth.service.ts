@@ -36,7 +36,7 @@ export class Authenticator {
   }
 
   public cadastrarUsuario(usuario: Usuario, senha: string) {
-    firebase.auth().createUserWithEmailAndPassword(usuario.email, senha)
+    return firebase.auth().createUserWithEmailAndPassword(usuario.email, senha)
       .then(
         (response: any) => {
           console.log('resposta parcial', response)
@@ -44,11 +44,6 @@ export class Authenticator {
             .then(
               (response: any) => {
                 this.router.navigate(['/login'])
-              }
-            )
-            .catch(
-              (erro: Error) => {
-                console.log(erro)
               }
             )
         }
@@ -73,8 +68,9 @@ export class Authenticator {
                         (snapshot: any) => {
                           this.__authToken = idToken
                           this.__usuario = snapshot.val()
+                          this.__usuario.id = snapshot.key
                           localStorage.setItem('userToken', idToken)
-                          localStorage.setItem('userInfo', JSON.stringify(snapshot.val()))
+                          localStorage.setItem('userInfo', JSON.stringify(this.__usuario))
                           resolve(true)
                           this.router.navigate(['/'])
                         }

@@ -1,0 +1,29 @@
+<div class="text-dark bt-shadowed-element bt-philosopher-font venda" [id]="vendaPendente.key">
+  <div>
+    Oferta: {{ vendaPendente.item.titulo }}
+  </div>
+  <div>
+    Comprador: {{ vendaPendente.comprador.nome }}
+  </div>
+  <div>
+    Quantidade: {{ vendaPendente.item.quantidade }}
+  </div>
+  <div>
+    Valor Total: {{ vendaPendente.item.preco * vendaPendente.item.quantidade | currency:'BRL':'symbol' }}
+  </div>
+  <div>
+    Forma de Pagamento: <span class="text-capitalize">{{ vendaPendente.formaPagamento }}</span>
+  </div>
+
+  <div class="row justify-content-center mt-3">
+    <div class="col-3">
+      <button class="btn btn-success" (click)="aceitarVenda(vendaPendente)">Aceitar</button>
+    </div>
+    <div class="col-3">
+      <button class="btn btn-danger" (click)="rejeitarVenda(vendaPendente)">Rejeitar</button>
+    </div>
+
+  </div>
+
+
+</div>

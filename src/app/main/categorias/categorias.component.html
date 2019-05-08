@@ -44,14 +44,8 @@
     </div>
   </div>
 
-
   <div *ngIf="ofertas === null; else semOfertas">
-      <div class="bt-absolutely-centered">
-          <h1 class="text-center bt-philosopher-font">Buscando ofertas</h1>
-          <div class="d-flex justify-content-center">
-              <img class="img-fluid" src="../../../assets/gif/loading.gif">
-          </div>
-      </div>
+    <app-loading-ofertas></app-loading-ofertas>
   </div>
 
   <ng-template #semOfertas>

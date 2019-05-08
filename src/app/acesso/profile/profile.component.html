@@ -1,16 +1,20 @@
 <div *ngIf="getUserIsVendor() != null && getUserIsVendor() != undefined && getUserIsVendor() === true">
 
-  <div>
-    <div class="text-center text-light text-uppercase h2 bt-philosopher-font">Minhas ofertas</div>
-    <div class="d-flex justify-content-center my-3">
-      <a routerLink="/cadastrar-oferta" class="btn btn-warning bt-philosopher-font">Cadastrar Nova Oferta</a>
+  <div class="container mb-3" *ngIf="ofertas != null; else loadingOfertas">
+
+    <div>
+      <div class="text-center text-light text-uppercase h2 bt-philosopher-font">Minhas ofertas</div>
+      <div class="d-flex justify-content-center my-3">
+        <a routerLink="/cadastrar-oferta" class="btn btn-warning bt-philosopher-font">Cadastrar Nova Oferta</a>
+      </div>
+
     </div>
 
-  </div>
-
-
-
-  <div class="container mb-3">
+    <div class="row">
+      <div *ngFor="let vendaPendente of vendasPendentes" class="col-6">
+          <app-venda-pendente [vendaPendente]="vendaPendente"></app-venda-pendente>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-12 col-lg-6 text-light d-flex justify-content-center align-items-center bt-bottom-separator"
@@ -47,7 +51,9 @@
 
   </div>
 
-
+  <ng-template #loadingOfertas>
+    <app-loading-ofertas></app-loading-ofertas>
+  </ng-template>
 
 </div>
 
@@ -55,4 +61,4 @@
   página de cliente
 </p>
 
-<!-- <button (click)="test()">test</button> -->
+<button (click)="test()">test</button>

@@ -25,5 +25,4 @@ export class CepService {
             retry(10)
         )
     }
-
 }
